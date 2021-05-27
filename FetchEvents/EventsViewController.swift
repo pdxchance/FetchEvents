@@ -7,12 +7,16 @@
 
 import UIKit
 import Kingfisher
+import CRRefresh
 
 class EventsViewController: UIViewController {
     
     let cellReuseID = "cellReuseID"
     
     var events : [Event] = []
+    
+    var pageNumber : Int = 0
+    var totalRecords : Int = 0
     
     let searchBar : UISearchBar = {
         let searchBar = UISearchBar()
@@ -44,6 +48,33 @@ class EventsViewController: UIViewController {
         searchBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         
         tableView.anchor(top: searchBar.bottomAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        
+        tableView.cr.addHeadRefresh(animator: NormalHeaderAnimator()) { [weak self] in
+            /// start refresh
+            /// Do anything you want...
+            self?.resetSearch(loadData: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                /// Stop refresh when your job finished, it will reset refresh footer if completion is true
+                self?.tableView.cr.endHeaderRefresh()
+                self?.tableView.cr.resetNoMore()
+            })
+        }
+        
+        /// animator: your customize animator, default is NormalFootAnimator
+        tableView.cr.addFootRefresh(animator: NormalFooterAnimator()) { [weak self] in
+            /// start refresh
+            self?.loadData(params: [:])
+            /// Do anything you want...
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+
+                self?.tableView.cr.endLoadingMore()
+                
+                let totalCount = self?.totalRecords ?? 0
+                if self?.events.count == totalCount {
+                    self?.tableView.cr.noticeNoMoreData()
+                }
+            })
+        }
         
         let params : [String: Any] = [:]
         loadData(params: params)
@@ -88,7 +119,8 @@ extension EventsViewController {
         
         let session = URLSession.shared
         
-        let queryParams = "client_id=" + clientId + "&" + "client_secret=" + secret
+        pageNumber += 1
+        let queryParams = "client_id=" + clientId + "&" + "client_secret=" + secret + "&" + "page=" + String(pageNumber)
         let url = URL(string: baseUrl + eventsEndpoint + "?" + queryParams)!
         
 
@@ -98,7 +130,10 @@ extension EventsViewController {
             do {
                 
                 let payload = try JSONDecoder().decode(EventModel.self, from: data!)
-                self.events = payload.events ?? []
+                let events = payload.events ?? []
+                self.totalRecords = payload.meta!.total!
+                
+                self.events += events
                 
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
@@ -117,8 +152,13 @@ extension EventsViewController {
             }
         })
         task.resume()
-        
-        
-        
+    }
+    
+    func resetSearch(loadData: Bool) {
+        self.events = []
+        self.pageNumber = 0
+        if loadData {
+            self.loadData(params: [:])
+        }
     }
 }

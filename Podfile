@@ -7,5 +7,6 @@ target 'FetchEvents' do
 
   # Pods for FetchEvents
   pod 'Kingfisher', '~> 6.0'
+  pod 'CRRefresh'
 
 end
