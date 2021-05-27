@@ -92,11 +92,18 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
         
         let node = events[indexPath.row]
         
+        let url = URL(string: node.performers![0].image!)
+        cell.eventImage.kf.setImage(with: url)
 
         cell.eventTitle.text = node.title
         
-        let url = URL(string: node.performers![0].image!)
-        cell.eventImage.kf.setImage(with: url)
+        let city = node.venue?.city ?? ""
+        let state = node.venue?.state ?? ""
+        cell.eventLocation.text = city + ", " + state
+        
+        cell.eventDate.text = node.datetime_utc
+        
+
 
         
         return cell

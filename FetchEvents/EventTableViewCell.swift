@@ -9,9 +9,18 @@ import UIKit
 
 class EventTableViewCell: UITableViewCell {
     
+    let contentStackView : UIStackView = {
+       let contentStackView = UIStackView()
+        contentStackView.axis = .vertical
+        contentStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return contentStackView
+    }()
+    
     let imageStackView : UIStackView = {
        let imageStackView = UIStackView()
         imageStackView.axis = .vertical
+        imageStackView.distribution = .fill
         imageStackView.translatesAutoresizingMaskIntoConstraints = false
         
         return imageStackView
@@ -19,7 +28,7 @@ class EventTableViewCell: UITableViewCell {
     
     let eventImage : UIImageView = {
        let eventImage = UIImageView()
-        eventImage.contentMode = .scaleAspectFit
+        eventImage.contentMode = .scaleToFill
         eventImage.translatesAutoresizingMaskIntoConstraints = false
         
         return eventImage
@@ -52,37 +61,30 @@ class EventTableViewCell: UITableViewCell {
     
     let eventDate : UILabel = {
         let eventDate = UILabel()
+        eventDate.font = .systemFont(ofSize: 17.0, weight: .thin)
         eventDate.translatesAutoresizingMaskIntoConstraints = false
         
         return eventDate
     }()
-    
-    let eventTime : UILabel = {
-        let eventTime = UILabel()
-        eventTime.translatesAutoresizingMaskIntoConstraints = false
-        
-        return eventTime
-    }()
-    
-//    eventFavoriteImage
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
                 
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        contentView.addSubview(eventImage)
-        contentView.addSubview(bodyStackView)
+        addSubview(imageStackView)
+        addSubview(bodyStackView)
+        addSubview(contentStackView)
         
+        imageStackView.addArrangedSubview(eventImage)
         
         bodyStackView.addArrangedSubview(eventTitle)
         bodyStackView.addArrangedSubview(eventLocation)
         bodyStackView.addArrangedSubview(eventDate)
-        bodyStackView.addArrangedSubview(eventTime)
         
-        eventImage.anchor(top: contentView.topAnchor, bottom: contentView.bottomAnchor, leading: contentView.leadingAnchor, trailing: nil, padding: .init(top: 16, left: 0, bottom: 16, right: 0), size: .init(width: 200, height: 100))
+        contentStackView.addArrangedSubview(imageStackView)
+        contentStackView.addArrangedSubview(bodyStackView)
         
-        bodyStackView.anchor(top: eventImage.topAnchor, bottom: contentView.bottomAnchor, leading: eventImage.trailingAnchor, trailing: contentView.trailingAnchor, padding: .init(top: 0, left: 8, bottom: 16, right: 8))
-
+        contentStackView.anchor(top: self.topAnchor, bottom: self.bottomAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, padding: .init(top: 8, left: 8, bottom: 8, right: 8))
     }
     
     required init?(coder: NSCoder) {

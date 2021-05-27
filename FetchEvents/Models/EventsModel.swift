@@ -46,7 +46,7 @@ struct Event: Codable {
     let eventPromotion: Bool?
     let announcements: Announcements?
     let conditional: Bool?
-    let enddatetimeUTC: String?
+    let datetime_utc: String?
     let themes, domainInformation: [String]?
 }
 
