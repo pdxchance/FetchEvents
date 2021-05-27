@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class EventsViewController: UIViewController {
     
@@ -22,6 +23,7 @@ class EventsViewController: UIViewController {
     
     let tableView : UITableView = {
        let tableView = UITableView()
+        tableView.separatorStyle = .none
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         return tableView
@@ -32,6 +34,8 @@ class EventsViewController: UIViewController {
         super.viewDidLoad()
         
         tableView.register(EventTableViewCell.self, forCellReuseIdentifier: cellReuseID)
+        tableView.delegate = self
+        tableView.dataSource = self
 
         view.addSubview(searchBar)
         view.addSubview(tableView)
@@ -53,7 +57,29 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseID, for: indexPath) as! EventTableViewCell
+        
+        let node = events[indexPath.row]
+        
+
+        cell.eventTitle.text = node.title
+        
+        let url = URL(string: node.performers![0].image!)
+        cell.eventImage.kf.setImage(with: url)
+
+        
+        return cell
+        
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 }
 
@@ -73,6 +99,10 @@ extension EventsViewController {
                 
                 let payload = try JSONDecoder().decode(EventModel.self, from: data!)
                 self.events = payload.events ?? []
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
                 
             } catch DecodingError.keyNotFound(let key, let context) {
                 Swift.print("could not find key \(key) in JSON: \(context.debugDescription)")

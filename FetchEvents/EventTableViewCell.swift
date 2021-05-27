@@ -9,8 +9,17 @@ import UIKit
 
 class EventTableViewCell: UITableViewCell {
     
+    let imageStackView : UIStackView = {
+       let imageStackView = UIStackView()
+        imageStackView.axis = .vertical
+        imageStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return imageStackView
+    }()
+    
     let eventImage : UIImageView = {
        let eventImage = UIImageView()
+        eventImage.contentMode = .scaleAspectFit
         eventImage.translatesAutoresizingMaskIntoConstraints = false
         
         return eventImage
@@ -26,6 +35,9 @@ class EventTableViewCell: UITableViewCell {
     
     let eventTitle : UILabel = {
         let eventTitle = UILabel()
+        eventTitle.font = .systemFont(ofSize: 24.0, weight: .black)
+        eventTitle.numberOfLines = 0
+        eventTitle.lineBreakMode = .byWordWrapping
         eventTitle.translatesAutoresizingMaskIntoConstraints = false
         
         return eventTitle
@@ -61,14 +73,15 @@ class EventTableViewCell: UITableViewCell {
         contentView.addSubview(eventImage)
         contentView.addSubview(bodyStackView)
         
+        
         bodyStackView.addArrangedSubview(eventTitle)
         bodyStackView.addArrangedSubview(eventLocation)
         bodyStackView.addArrangedSubview(eventDate)
-        bodyStackView.addSubview(eventTime)
+        bodyStackView.addArrangedSubview(eventTime)
         
-        eventImage.anchor(top: contentView.topAnchor, bottom: nil, leading: contentView.leadingAnchor, trailing: nil, padding: .init(top: 16, left: 16, bottom: 0, right: 0), size: .init(width: 50, height: 50))
+        eventImage.anchor(top: contentView.topAnchor, bottom: contentView.bottomAnchor, leading: contentView.leadingAnchor, trailing: nil, padding: .init(top: 16, left: 16, bottom: 16, right: 0), size: .init(width: 100, height: 100))
         
-        bodyStackView.anchor(top: contentView.topAnchor, bottom: nil, leading: eventImage.leadingAnchor, trailing: contentView.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        bodyStackView.anchor(top: eventImage.topAnchor, bottom: contentView.bottomAnchor, leading: eventImage.trailingAnchor, trailing: contentView.trailingAnchor, padding: .init(top: 0, left: 16, bottom: 16, right: 16))
 
     }
     
@@ -81,5 +94,6 @@ class EventTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
 
 }

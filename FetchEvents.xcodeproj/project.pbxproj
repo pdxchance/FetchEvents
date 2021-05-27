@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		510404E7DF3D3661B2A49247 /* Pods_FetchEvents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB7927EC5A82C988835C7D49 /* Pods_FetchEvents.framework */; };
 		CEF2962A265FBBF4004525B8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF29629265FBBF4004525B8 /* AppDelegate.swift */; };
 		CEF2962C265FBBF4004525B8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF2962B265FBBF4004525B8 /* SceneDelegate.swift */; };
 		CEF29634265FBBF4004525B8 /* FetchEvents.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CEF29632265FBBF4004525B8 /* FetchEvents.xcdatamodeld */; };
@@ -20,6 +21,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7D83104B28CB9B01EA1CF9B3 /* Pods-FetchEvents.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FetchEvents.release.xcconfig"; path = "Target Support Files/Pods-FetchEvents/Pods-FetchEvents.release.xcconfig"; sourceTree = "<group>"; };
+		BE2EAFA981106EBA5B2E73D1 /* Pods-FetchEvents.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FetchEvents.debug.xcconfig"; path = "Target Support Files/Pods-FetchEvents/Pods-FetchEvents.debug.xcconfig"; sourceTree = "<group>"; };
+		CB7927EC5A82C988835C7D49 /* Pods_FetchEvents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FetchEvents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF29626265FBBF4004525B8 /* FetchEvents.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FetchEvents.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF29629265FBBF4004525B8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CEF2962B265FBBF4004525B8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -39,17 +43,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				510404E7DF3D3661B2A49247 /* Pods_FetchEvents.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		352969960868818263091290 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BE2EAFA981106EBA5B2E73D1 /* Pods-FetchEvents.debug.xcconfig */,
+				7D83104B28CB9B01EA1CF9B3 /* Pods-FetchEvents.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		CEF2961D265FBBF4004525B8 = {
 			isa = PBXGroup;
 			children = (
 				CEF29628265FBBF4004525B8 /* FetchEvents */,
 				CEF29627265FBBF4004525B8 /* Products */,
+				352969960868818263091290 /* Pods */,
+				CF298C60A19A8FF9F07A8E70 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -87,6 +104,14 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		CF298C60A19A8FF9F07A8E70 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CB7927EC5A82C988835C7D49 /* Pods_FetchEvents.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -94,9 +119,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CEF2963D265FBBF5004525B8 /* Build configuration list for PBXNativeTarget "FetchEvents" */;
 			buildPhases = (
+				6F79C86580DB997CD368514D /* [CP] Check Pods Manifest.lock */,
 				CEF29622265FBBF4004525B8 /* Sources */,
 				CEF29623265FBBF4004525B8 /* Frameworks */,
 				CEF29624265FBBF4004525B8 /* Resources */,
+				E3A3751F5C3B99B9FD627A35 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -150,6 +177,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6F79C86580DB997CD368514D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FetchEvents-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E3A3751F5C3B99B9FD627A35 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FetchEvents/Pods-FetchEvents-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FetchEvents/Pods-FetchEvents-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FetchEvents/Pods-FetchEvents-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		CEF29622265FBBF4004525B8 /* Sources */ = {
@@ -232,7 +301,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -287,7 +356,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -299,6 +368,7 @@
 		};
 		CEF2963E265FBBF5004525B8 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BE2EAFA981106EBA5B2E73D1 /* Pods-FetchEvents.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -318,6 +388,7 @@
 		};
 		CEF2963F265FBBF5004525B8 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7D83104B28CB9B01EA1CF9B3 /* Pods-FetchEvents.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
