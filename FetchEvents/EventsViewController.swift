@@ -50,21 +50,15 @@ class EventsViewController: UIViewController {
         tableView.anchor(top: searchBar.bottomAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         
         tableView.cr.addHeadRefresh(animator: NormalHeaderAnimator()) { [weak self] in
-            /// start refresh
-            /// Do anything you want...
             self?.resetSearch(loadData: true)
             DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-                /// Stop refresh when your job finished, it will reset refresh footer if completion is true
                 self?.tableView.cr.endHeaderRefresh()
                 self?.tableView.cr.resetNoMore()
             })
         }
         
-        /// animator: your customize animator, default is NormalFootAnimator
         tableView.cr.addFootRefresh(animator: NormalFooterAnimator()) { [weak self] in
-            /// start refresh
             self?.loadData(params: [:])
-            /// Do anything you want...
             DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
 
                 self?.tableView.cr.endLoadingMore()
@@ -120,7 +114,11 @@ extension EventsViewController {
         let session = URLSession.shared
         
         pageNumber += 1
-        let queryParams = "client_id=" + clientId + "&" + "client_secret=" + secret + "&" + "page=" + String(pageNumber)
+        let authentication = "client_id=" + clientId + "&" + "client_secret=" + secret
+        let pageNumber = "page=" + String(pageNumber)
+        let query = "q=" +  self.searchBar.text!
+        
+        let queryParams = authentication + "&" + pageNumber + "&" + query
         let url = URL(string: baseUrl + eventsEndpoint + "?" + queryParams)!
         
 
@@ -157,6 +155,7 @@ extension EventsViewController {
     func resetSearch(loadData: Bool) {
         self.events = []
         self.pageNumber = 0
+        self.totalRecords = 0
         if loadData {
             self.loadData(params: [:])
         }
