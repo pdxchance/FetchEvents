@@ -27,7 +27,8 @@ class EventsViewController: UIViewController {
     
     let tableView : UITableView = {
        let tableView = UITableView()
-        tableView.separatorStyle = .none
+        tableView.separatorStyle = .singleLine
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         return tableView
