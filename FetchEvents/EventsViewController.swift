@@ -46,6 +46,7 @@ class EventsViewController: UIViewController {
         view.addSubview(searchBar)
         view.addSubview(tableView)
         
+        title = "Fetch Events"
         
         searchBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         

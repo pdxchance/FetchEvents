@@ -81,7 +81,7 @@ class EventTableViewCell: UITableViewCell {
         
         eventImage.anchor(top: contentView.topAnchor, bottom: contentView.bottomAnchor, leading: contentView.leadingAnchor, trailing: nil, padding: .init(top: 16, left: 16, bottom: 16, right: 0), size: .init(width: 100, height: 100))
         
-        bodyStackView.anchor(top: eventImage.topAnchor, bottom: contentView.bottomAnchor, leading: eventImage.trailingAnchor, trailing: contentView.trailingAnchor, padding: .init(top: 0, left: 16, bottom: 16, right: 16))
+        bodyStackView.anchor(top: contentView.topAnchor, bottom: contentView.bottomAnchor, leading: eventImage.trailingAnchor, trailing: contentView.trailingAnchor, padding: .init(top: 0, left: 16, bottom: 16, right: 16))
 
     }
     
