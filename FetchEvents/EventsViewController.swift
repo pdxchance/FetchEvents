@@ -40,6 +40,8 @@ class EventsViewController: UIViewController {
         tableView.register(EventTableViewCell.self, forCellReuseIdentifier: cellReuseID)
         tableView.delegate = self
         tableView.dataSource = self
+        
+        searchBar.delegate = self
 
         view.addSubview(searchBar)
         view.addSubview(tableView)
@@ -109,7 +111,7 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension EventsViewController {
-    func loadData(params : [String: Any]) {
+    @objc func loadData(params : [String: Any]) {
         
         let session = URLSession.shared
         
@@ -161,3 +163,17 @@ extension EventsViewController {
         }
     }
 }
+
+extension EventsViewController : UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        resetSearch(loadData: false)
+        
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(loadData(params:)), object: nil)
+        self.perform(#selector(loadData(params:)), with: nil, afterDelay: 0.5)
+    }
+    
+}
+    
+
