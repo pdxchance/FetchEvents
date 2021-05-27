@@ -168,12 +168,20 @@ extension EventsViewController : UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        resetSearch(loadData: false)
+        if searchText.isEmpty {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                searchBar.resignFirstResponder()
+            }
+        }
         
+        searchBar.resignFirstResponder()
+        
+        
+        resetSearch(loadData: false)
+                
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(loadData(params:)), object: nil)
         self.perform(#selector(loadData(params:)), with: nil, afterDelay: 0.5)
     }
-    
 }
     
 
