@@ -65,6 +65,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		CE03F4592660F28B004BE4C4 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				CE03F4572660E81B004BE4C4 /* UpdateFavoritesProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		CEAC0DC32660771900D29AAA /* View Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -87,7 +95,6 @@
 			children = (
 				CEF29642265FC210004525B8 /* Constraints.swift */,
 				CEAC0DBF2660650B00D29AAA /* Utils.swift */,
-				CE03F4572660E81B004BE4C4 /* UpdateFavoritesProtocol.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -129,6 +136,7 @@
 		CEF29628265FBBF4004525B8 /* FetchEvents */ = {
 			isa = PBXGroup;
 			children = (
+				CE03F4592660F28B004BE4C4 /* Protocols */,
 				CEAC0DC72660777800D29AAA /* Cells */,
 				CEAC0DC62660775A00D29AAA /* Constants */,
 				CEAC0DC52660774800D29AAA /* Utils */,
