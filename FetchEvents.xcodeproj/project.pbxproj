@@ -61,6 +61,47 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		CEAC0DC32660771900D29AAA /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
+		CEAC0DC42660773200D29AAA /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				CEAC0DC12660759300D29AAA /* EventsDetailViewController.swift */,
+				CEF29640265FC0F3004525B8 /* EventsViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		CEAC0DC52660774800D29AAA /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				CEF29642265FC210004525B8 /* Constraints.swift */,
+				CEAC0DBF2660650B00D29AAA /* Utils.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		CEAC0DC62660775A00D29AAA /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				CEF29648265FCD8E004525B8 /* Constants.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		CEAC0DC72660777800D29AAA /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				CEF29646265FC720004525B8 /* EventTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		CEF2961D265FBBF4004525B8 = {
 			isa = PBXGroup;
 			children = (
@@ -82,18 +123,17 @@
 		CEF29628265FBBF4004525B8 /* FetchEvents */ = {
 			isa = PBXGroup;
 			children = (
+				CEAC0DC72660777800D29AAA /* Cells */,
+				CEAC0DC62660775A00D29AAA /* Constants */,
+				CEAC0DC52660774800D29AAA /* Utils */,
+				CEAC0DC42660773200D29AAA /* Controllers */,
+				CEAC0DC32660771900D29AAA /* View Models */,
 				CEF2964A265FDF34004525B8 /* Models */,
 				CEF29629265FBBF4004525B8 /* AppDelegate.swift */,
-				CEF29640265FC0F3004525B8 /* EventsViewController.swift */,
-				CEF29648265FCD8E004525B8 /* Constants.swift */,
-				CEF29646265FC720004525B8 /* EventTableViewCell.swift */,
 				CEF29635265FBBF5004525B8 /* Assets.xcassets */,
 				CEF29637265FBBF5004525B8 /* LaunchScreen.storyboard */,
 				CEF2963A265FBBF5004525B8 /* Info.plist */,
 				CEF29632265FBBF4004525B8 /* FetchEvents.xcdatamodeld */,
-				CEF29642265FC210004525B8 /* Constraints.swift */,
-				CEAC0DBF2660650B00D29AAA /* Utils.swift */,
-				CEAC0DC12660759300D29AAA /* EventsDetailViewController.swift */,
 			);
 			path = FetchEvents;
 			sourceTree = "<group>";
