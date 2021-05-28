@@ -117,7 +117,8 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let controller = EventsDetailViewController()
+        let event = events[indexPath.row]
+        let controller = EventsDetailViewController(event: event)
         navigationController?.pushViewController(controller, animated: true)
     }
 }
