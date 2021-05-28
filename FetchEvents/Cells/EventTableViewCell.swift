@@ -66,6 +66,15 @@ class EventTableViewCell: UITableViewCell {
         
         return eventDate
     }()
+    
+    let favoriteImage : UIImageView = {
+       let favoriteImage = UIImageView()
+        favoriteImage.image = UIImage(named: "icons8-like")
+        favoriteImage.contentMode = .scaleAspectFit
+        favoriteImage.translatesAutoresizingMaskIntoConstraints = false
+        
+        return favoriteImage
+    }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
                 
@@ -76,6 +85,8 @@ class EventTableViewCell: UITableViewCell {
         addSubview(contentStackView)
         
         imageStackView.addArrangedSubview(eventImage)
+        eventImage.addSubview(favoriteImage)
+
         
         bodyStackView.addArrangedSubview(eventTitle)
         bodyStackView.addArrangedSubview(eventLocation)
@@ -85,6 +96,8 @@ class EventTableViewCell: UITableViewCell {
         contentStackView.addArrangedSubview(bodyStackView)
         
         contentStackView.anchor(top: self.topAnchor, bottom: self.bottomAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, padding: .init(top: 8, left: 8, bottom: 8, right: 8))
+        
+        favoriteImage.anchor(top: eventImage.topAnchor, bottom: nil, leading: eventImage.leadingAnchor, trailing: nil, padding: .init(top: 16, left: 16, bottom: 0, right: 8))
     }
     
     required init?(coder: NSCoder) {
