@@ -92,22 +92,30 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
         
         let node = events[indexPath.row]
         
-        let url = URL(string: node.performers![0].image!)
-        cell.eventImage.kf.setImage(with: url)
-
         cell.eventTitle.text = node.title
         
         let city = node.venue?.city ?? ""
         let state = node.venue?.state ?? ""
         cell.eventLocation.text = city + ", " + state
         
-        cell.eventDate.text = node.datetime_utc
+        cell.eventDate.text = convertUTC(timestamp: node.datetime_utc)
         
-
-
-        
+                
         return cell
         
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        let nextCell = cell as! EventTableViewCell
+        
+        let node = events[indexPath.row]
+        
+        let url = URL(string: node.performers![0].image!)
+        
+        DispatchQueue.main.async {
+            nextCell.eventImage.kf.setImage(with: url)
+        }
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -123,7 +131,7 @@ extension EventsViewController {
     @objc func loadData(params : [String: Any]) {
         
         let session = URLSession.shared
-        
+                
         pageNumber += 1
         let authentication = "client_id=" + clientId + "&" + "client_secret=" + secret
         let pageNumber = "page=" + String(pageNumber)
