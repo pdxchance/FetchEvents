@@ -91,34 +91,29 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseID, for: indexPath) as! EventTableViewCell
         
         let node = events[indexPath.row]
+        let viewModel = EventViewModel(event: node)
         
-        cell.eventTitle.text = node.title
-        
-        let city = node.venue?.city ?? ""
-        let state = node.venue?.state ?? ""
-        cell.eventLocation.text = city + ", " + state
-        
-        cell.eventDate.text = convertUTC(timestamp: node.datetime_utc)
+        cell.eventTitle.text = viewModel.eventTitle
+        cell.eventLocation.text = viewModel.eventLocation
+        cell.eventDate.text = viewModel.eventDateTime
         
         let url = URL(string: node.performers![0].image!)
-        
         DispatchQueue.main.async {
-            cell.eventImage.kf.setImage(with: url)
+            cell.eventImage.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), completionHandler: nil)
+
         }
         
-        cell.eventImage.setNeedsDisplay()
+        cell.setNeedsDisplay()
 
-                
         return cell
-        
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+        return 350
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+        return 350
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
