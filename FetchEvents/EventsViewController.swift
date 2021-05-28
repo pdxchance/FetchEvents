@@ -105,6 +105,9 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
         DispatchQueue.main.async {
             cell.eventImage.kf.setImage(with: url)
         }
+        
+        cell.eventImage.setNeedsDisplay()
+
                 
         return cell
         
@@ -116,6 +119,11 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let controller = EventsDetailViewController()
+        navigationController?.pushViewController(controller, animated: true)
     }
 }
 
