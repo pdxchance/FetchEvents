@@ -55,8 +55,8 @@ class EventsDetailViewController: UIViewController {
     let favoriteImage : UIButton = {
        let favoriteImage = UIButton()
         favoriteImage.contentMode = .scaleAspectFit
-        favoriteImage.setImage(UIImage(named: "icons8-like"), for: .normal)
-        favoriteImage.setImage(UIImage(named: "icons8-hearts"), for: .selected)
+        favoriteImage.setImage(UIImage(named: "icons8-like"), for: .selected)
+        favoriteImage.setImage(UIImage(named: "icons8-hearts"), for: .normal)
         favoriteImage.translatesAutoresizingMaskIntoConstraints = false
 
         return favoriteImage
