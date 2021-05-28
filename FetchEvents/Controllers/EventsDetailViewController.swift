@@ -11,6 +11,10 @@ class EventsDetailViewController: UIViewController {
     
     var event : Event
     
+    var delegate : UpdateFavoritesProtocol
+    
+    var isSelected: Bool
+
     let contentStackView : UIStackView = {
        let contentStackView = UIStackView()
         contentStackView.axis = .vertical
@@ -62,8 +66,11 @@ class EventsDetailViewController: UIViewController {
         return favoriteImage
     }()
     
-    init(event: Event) {
+    init(event: Event, delegate: UpdateFavoritesProtocol, isSelected: Bool) {
         self.event = event
+        self.delegate = delegate
+        self.isSelected = isSelected
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -79,6 +86,7 @@ class EventsDetailViewController: UIViewController {
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
         
         favoriteImage.addTarget(self, action: #selector(toggleFavorites), for: .touchUpInside)
+        favoriteImage.isSelected = isSelected
 
         view.addSubview(contentStackView)
         contentStackView.addArrangedSubview(eventTitle)
@@ -93,7 +101,7 @@ class EventsDetailViewController: UIViewController {
         eventLocation.text = viewModel.eventLocation
         eventDate.text = viewModel.eventDateTime
         
-        let url = URL(string: event.performers![0].image!)
+        let url = URL(string: (event.performers![0].image!))
         DispatchQueue.main.async {
             self.eventImage.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), completionHandler: nil)
         }
@@ -101,6 +109,11 @@ class EventsDetailViewController: UIViewController {
         contentStackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         
         favoriteImage.anchor(top: eventImage.topAnchor, bottom: nil, leading: nil, trailing: eventImage.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0), size: .init(width: 50, height: 50))
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.delegate.updateFavorites(event: event, isSelected: favoriteImage.isSelected)
+        
     }
     
     @objc func toggleFavorites() {

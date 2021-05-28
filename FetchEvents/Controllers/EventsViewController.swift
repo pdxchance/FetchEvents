@@ -15,6 +15,8 @@ class EventsViewController: UIViewController {
     
     var events : [Event] = []
     
+    var favorites : [Int] = []
+    
     var pageNumber : Int = 0
     var totalRecords : Int = 0
     
@@ -37,6 +39,9 @@ class EventsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let defaults = UserDefaults.standard
+        self.favorites = defaults.array(forKey: "Favorites")  as? [Int] ?? [Int]()
         
         tableView.register(EventTableViewCell.self, forCellReuseIdentifier: cellReuseID)
         tableView.delegate = self
@@ -102,11 +107,17 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
         let url = URL(string: node.performers![0].image!)
         cell.eventImage.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), completionHandler: nil)
         
+        if let index = favorites.firstIndex(where: { $0 == node.id }) {
+            cell.favoriteImage.isHidden = false
+        } else {
+            cell.favoriteImage.isHidden = true
+        }
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 400
+        return 350
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -116,7 +127,12 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let event = events[indexPath.row]
         
-        let controller = EventsDetailViewController(event: event)
+        var isSelected = false
+        if let index = favorites.firstIndex(where: { $0 == event.id }) {
+            isSelected = true
+        }
+
+        let controller = EventsDetailViewController(event: event, delegate: self, isSelected: isSelected)
         navigationController?.pushViewController(controller, animated: true)
     }
 }
@@ -193,6 +209,27 @@ extension EventsViewController : UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
+    }
+}
+
+extension EventsViewController: UpdateFavoritesProtocol {
+    func updateFavorites(event: Event, isSelected: Bool) {
+        
+        let eventId = event.id ?? 0
+        if let index = favorites.firstIndex(where: { $0 == eventId }) {
+            if !isSelected {
+                favorites.remove(at: index)
+            }
+        } else {
+            if isSelected {
+                favorites.append(eventId)
+            }
+        }
+                
+        let defaults = UserDefaults.standard
+        defaults.set(self.favorites, forKey: "Favorites")
+        
+        tableView.reloadData()
     }
 }
     
