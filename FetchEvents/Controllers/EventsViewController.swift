@@ -49,6 +49,8 @@ class EventsViewController: UIViewController {
         
         title = "Fetch Events"
         
+        searchBar.returnKeyType = .done
+        
         searchBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         
         tableView.anchor(top: searchBar.bottomAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
@@ -98,13 +100,8 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
         cell.eventDate.text = viewModel.eventDateTime
         
         let url = URL(string: node.performers![0].image!)
-        DispatchQueue.main.async {
-            cell.eventImage.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), completionHandler: nil)
-
-        }
+        cell.eventImage.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), completionHandler: nil)
         
-        cell.setNeedsDisplay()
-
         return cell
     }
     
@@ -118,6 +115,7 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let event = events[indexPath.row]
+        
         let controller = EventsDetailViewController(event: event)
         navigationController?.pushViewController(controller, animated: true)
     }
@@ -187,13 +185,14 @@ extension EventsViewController : UISearchBarDelegate {
             }
         }
         
-        searchBar.resignFirstResponder()
-        
-        
         resetSearch(loadData: false)
                 
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(loadData(params:)), object: nil)
         self.perform(#selector(loadData(params:)), with: nil, afterDelay: 0.5)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
 }
     
