@@ -22,6 +22,7 @@ class EventsViewController: UIViewController {
     
     let searchBar : UISearchBar = {
         let searchBar = UISearchBar()
+        searchBar.placeholder = "Search events"
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         
         return searchBar

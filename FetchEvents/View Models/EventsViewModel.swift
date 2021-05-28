@@ -28,7 +28,7 @@ public class EventViewModel {
     
     public var eventDateTime : String {
         
-        let dateTime = event.datetime_utc ?? ""
+        let dateTime = event.datetime_local ?? ""
         
         guard dateTime != "" else {
             return ""
