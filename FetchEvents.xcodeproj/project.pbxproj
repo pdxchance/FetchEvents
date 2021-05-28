@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		510404E7DF3D3661B2A49247 /* Pods_FetchEvents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB7927EC5A82C988835C7D49 /* Pods_FetchEvents.framework */; };
 		CE03F4582660E81B004BE4C4 /* UpdateFavoritesProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE03F4572660E81B004BE4C4 /* UpdateFavoritesProtocol.swift */; };
+		CE03F4632660FD32004BE4C4 /* FetchEventsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE03F4622660FD32004BE4C4 /* FetchEventsTests.swift */; };
 		CEAC0DC02660650B00D29AAA /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAC0DBF2660650B00D29AAA /* Utils.swift */; };
 		CEAC0DC22660759300D29AAA /* EventsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAC0DC12660759300D29AAA /* EventsDetailViewController.swift */; };
 		CEAC0DC926607C7E00D29AAA /* EventsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAC0DC826607C7E00D29AAA /* EventsViewModel.swift */; };
@@ -23,11 +24,24 @@
 		CEF2967C265FE9D2004525B8 /* EventsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF2967B265FE9D2004525B8 /* EventsModel.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		CE03F4652660FD32004BE4C4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEF2961E265FBBF4004525B8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CEF29625265FBBF4004525B8;
+			remoteInfo = FetchEvents;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		7D83104B28CB9B01EA1CF9B3 /* Pods-FetchEvents.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FetchEvents.release.xcconfig"; path = "Target Support Files/Pods-FetchEvents/Pods-FetchEvents.release.xcconfig"; sourceTree = "<group>"; };
 		BE2EAFA981106EBA5B2E73D1 /* Pods-FetchEvents.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FetchEvents.debug.xcconfig"; path = "Target Support Files/Pods-FetchEvents/Pods-FetchEvents.debug.xcconfig"; sourceTree = "<group>"; };
 		CB7927EC5A82C988835C7D49 /* Pods_FetchEvents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FetchEvents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE03F4572660E81B004BE4C4 /* UpdateFavoritesProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateFavoritesProtocol.swift; sourceTree = "<group>"; };
+		CE03F4602660FD32004BE4C4 /* FetchEventsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FetchEventsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE03F4622660FD32004BE4C4 /* FetchEventsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchEventsTests.swift; sourceTree = "<group>"; };
+		CE03F4642660FD32004BE4C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CEAC0DBF2660650B00D29AAA /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		CEAC0DC12660759300D29AAA /* EventsDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsDetailViewController.swift; sourceTree = "<group>"; };
 		CEAC0DC826607C7E00D29AAA /* EventsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsViewModel.swift; sourceTree = "<group>"; };
@@ -45,6 +59,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		CE03F45D2660FD32004BE4C4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CEF29623265FBBF4004525B8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -71,6 +92,15 @@
 				CE03F4572660E81B004BE4C4 /* UpdateFavoritesProtocol.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		CE03F4612660FD32004BE4C4 /* FetchEventsTests */ = {
+			isa = PBXGroup;
+			children = (
+				CE03F4622660FD32004BE4C4 /* FetchEventsTests.swift */,
+				CE03F4642660FD32004BE4C4 /* Info.plist */,
+			);
+			path = FetchEventsTests;
 			sourceTree = "<group>";
 		};
 		CEAC0DC32660771900D29AAA /* View Models */ = {
@@ -119,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				CEF29628265FBBF4004525B8 /* FetchEvents */,
+				CE03F4612660FD32004BE4C4 /* FetchEventsTests */,
 				CEF29627265FBBF4004525B8 /* Products */,
 				352969960868818263091290 /* Pods */,
 				CF298C60A19A8FF9F07A8E70 /* Frameworks */,
@@ -129,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				CEF29626265FBBF4004525B8 /* FetchEvents.app */,
+				CE03F4602660FD32004BE4C4 /* FetchEventsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -171,6 +203,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		CE03F45F2660FD32004BE4C4 /* FetchEventsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CE03F4692660FD32004BE4C4 /* Build configuration list for PBXNativeTarget "FetchEventsTests" */;
+			buildPhases = (
+				CE03F45C2660FD32004BE4C4 /* Sources */,
+				CE03F45D2660FD32004BE4C4 /* Frameworks */,
+				CE03F45E2660FD32004BE4C4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CE03F4662660FD32004BE4C4 /* PBXTargetDependency */,
+			);
+			name = FetchEventsTests;
+			productName = FetchEventsTests;
+			productReference = CE03F4602660FD32004BE4C4 /* FetchEventsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		CEF29625265FBBF4004525B8 /* FetchEvents */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CEF2963D265FBBF5004525B8 /* Build configuration list for PBXNativeTarget "FetchEvents" */;
@@ -199,6 +249,10 @@
 				LastSwiftUpdateCheck = 1250;
 				LastUpgradeCheck = 1250;
 				TargetAttributes = {
+					CE03F45F2660FD32004BE4C4 = {
+						CreatedOnToolsVersion = 12.5;
+						TestTargetID = CEF29625265FBBF4004525B8;
+					};
 					CEF29625265FBBF4004525B8 = {
 						CreatedOnToolsVersion = 12.5;
 					};
@@ -218,11 +272,19 @@
 			projectRoot = "";
 			targets = (
 				CEF29625265FBBF4004525B8 /* FetchEvents */,
+				CE03F45F2660FD32004BE4C4 /* FetchEventsTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		CE03F45E2660FD32004BE4C4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CEF29624265FBBF4004525B8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -277,6 +339,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		CE03F45C2660FD32004BE4C4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE03F4632660FD32004BE4C4 /* FetchEventsTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CEF29622265FBBF4004525B8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -297,6 +367,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		CE03F4662660FD32004BE4C4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CEF29625265FBBF4004525B8 /* FetchEvents */;
+			targetProxy = CE03F4652660FD32004BE4C4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		CEF29637265FBBF5004525B8 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -309,6 +387,48 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		CE03F4672660FD32004BE4C4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = M522U4LXZT;
+				INFOPLIST_FILE = FetchEventsTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.chance.FetchEventsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FetchEvents.app/FetchEvents";
+			};
+			name = Debug;
+		};
+		CE03F4682660FD32004BE4C4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = M522U4LXZT;
+				INFOPLIST_FILE = FetchEventsTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.chance.FetchEventsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FetchEvents.app/FetchEvents";
+			};
+			name = Release;
+		};
 		CEF2963B265FBBF5004525B8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -468,6 +588,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		CE03F4692660FD32004BE4C4 /* Build configuration list for PBXNativeTarget "FetchEventsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CE03F4672660FD32004BE4C4 /* Debug */,
+				CE03F4682660FD32004BE4C4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		CEF29621265FBBF4004525B8 /* Build configuration list for PBXProject "FetchEvents" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
