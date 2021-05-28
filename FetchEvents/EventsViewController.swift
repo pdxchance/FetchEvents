@@ -100,22 +100,14 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
         
         cell.eventDate.text = convertUTC(timestamp: node.datetime_utc)
         
-                
-        return cell
-        
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
-        let nextCell = cell as! EventTableViewCell
-        
-        let node = events[indexPath.row]
-        
         let url = URL(string: node.performers![0].image!)
         
         DispatchQueue.main.async {
-            nextCell.eventImage.kf.setImage(with: url)
+            cell.eventImage.kf.setImage(with: url)
         }
+                
+        return cell
+        
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
