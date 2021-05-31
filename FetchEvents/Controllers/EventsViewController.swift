@@ -159,18 +159,18 @@ extension EventsViewController {
         
 
         
-        let task = session.dataTask(with: url, completionHandler: { data, response, error in
+        let task = session.dataTask(with: url, completionHandler: { [weak self] (data, response, error) in
 
             do {
                 
                 let payload = try JSONDecoder().decode(EventModel.self, from: data!)
                 let events = payload.events ?? []
-                self.totalRecords = payload.meta!.total!
+                self?.totalRecords = payload.meta!.total!
                 
-                self.events += events
+                self?.events += events
                 
                 DispatchQueue.main.async {
-                    self.tableView.reloadData()
+                    self?.tableView.reloadData()
                 }
                 
             } catch DecodingError.keyNotFound(let key, let context) {
