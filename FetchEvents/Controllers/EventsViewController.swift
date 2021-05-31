@@ -22,6 +22,7 @@ class EventsViewController: UIViewController {
     
     let searchBar : UISearchBar = {
         let searchBar = UISearchBar()
+        searchBar.placeholder = "Search events"
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         
         return searchBar
@@ -42,6 +43,8 @@ class EventsViewController: UIViewController {
         
         let defaults = UserDefaults.standard
         self.favorites = defaults.array(forKey: "Favorites")  as? [Int] ?? [Int]()
+        
+        view.backgroundColor = .white
         
         tableView.register(EventTableViewCell.self, forCellReuseIdentifier: cellReuseID)
         tableView.delegate = self
@@ -132,8 +135,12 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
             isSelected = true
         }
 
-        let controller = EventsDetailViewController(event: event, delegate: self, isSelected: isSelected)
-        navigationController?.pushViewController(controller, animated: true)
+        let controller = EventsDetailViewController()
+        controller.event = event
+        controller.delegate = self
+        controller.isSelected = isSelected
+        
+        self.navigationController?.pushViewController(controller, animated: true)
     }
 }
 

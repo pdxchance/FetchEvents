@@ -29,7 +29,7 @@ struct Event: Codable {
     let performers: [Performer]?
     let isOpen: Bool?
     let links: [String]?
-    let datetimeLocal: String?
+    let datetime_local: String?
     let timeTbd: Bool?
     let shortTitle, visibleUntilUTC: String?
     let stats: EventStats?
