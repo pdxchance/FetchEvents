@@ -9,11 +9,11 @@ import UIKit
 
 class EventsDetailViewController: UIViewController {
     
-    var event : Event
+    var event : Event?
     
-    var delegate : UpdateFavoritesProtocol
+    var delegate : UpdateFavoritesProtocol?
     
-    var isSelected: Bool
+    var isSelected: Bool?
 
     let contentStackView : UIStackView = {
        let contentStackView = UIStackView()
@@ -66,18 +66,6 @@ class EventsDetailViewController: UIViewController {
         return favoriteImage
     }()
     
-    init(event: Event, delegate: UpdateFavoritesProtocol, isSelected: Bool) {
-        self.event = event
-        self.delegate = delegate
-        self.isSelected = isSelected
-        
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -85,8 +73,10 @@ class EventsDetailViewController: UIViewController {
         backButton.title = "Back"
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
         
+        view.backgroundColor = .white
+        
         favoriteImage.addTarget(self, action: #selector(toggleFavorites), for: .touchUpInside)
-        favoriteImage.isSelected = isSelected
+        favoriteImage.isSelected = isSelected ?? false
 
         view.addSubview(contentStackView)
         contentStackView.addArrangedSubview(eventTitle)
@@ -95,16 +85,14 @@ class EventsDetailViewController: UIViewController {
         contentStackView.addArrangedSubview(eventDate)
         view.addSubview(favoriteImage)
         
-        let viewModel = EventViewModel(event: event)
+        let viewModel = EventViewModel(event: event!)
         
         eventTitle.text = viewModel.eventTitle
         eventLocation.text = viewModel.eventLocation
         eventDate.text = viewModel.eventDateTime
         
-        let url = URL(string: (event.performers![0].image!))
-        DispatchQueue.main.async {
+        let url = URL(string: (event?.performers![0].image!)!)
             self.eventImage.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), completionHandler: nil)
-        }
         
         contentStackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         
@@ -112,7 +100,7 @@ class EventsDetailViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        self.delegate.updateFavorites(event: event, isSelected: favoriteImage.isSelected)
+        self.delegate!.updateFavorites(event: event!, isSelected: favoriteImage.isSelected)
         
     }
     
