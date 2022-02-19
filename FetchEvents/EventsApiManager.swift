@@ -19,7 +19,10 @@ class EventsApiManager {
     static let shared = EventsApiManager()
     private init() {}
     
-    var pageNumber = 1
+    private var events = [Event]()
+    
+    private var pageNumber = 1
+    private var totalRecords = 0
     
     func getEvents(query: String, completion: @escaping eventCompletionHandler) {
         
@@ -31,23 +34,26 @@ class EventsApiManager {
             URLQueryItem(name: "client_secret", value: secret)
         ]
         
-        guard let params = components.percentEncodedQuery else {
+        guard let queryString = components.percentEncodedQuery else {
             return
         }
         
-        let url = URL(string:"https://api.seatgeek.com/2/events?\(params)")!
+        let url = URL(string:"https://api.seatgeek.com/2/events?\(queryString)")!
         
         let task = session.dataTask(with: url, completionHandler: { [weak self]  (data, response, error) in
             
             do {
                 guard let self = self else { return }
                 
-                self.pageNumber += 1
+                
                 
                 let payload = try JSONDecoder().decode(EventModel.self, from: data!)
-                let events = payload.events ?? []
-                let totalRecords = payload.meta?.total ?? 0
-                completion(events, totalRecords)
+                
+                self.events = payload.events ?? []
+                self.pageNumber += 1
+                self.totalRecords = payload.meta?.total ?? 0
+                
+                completion(self.events, self.totalRecords)
         
             } catch DecodingError.keyNotFound(let key, let context) {
                 Swift.print("could not find key \(key) in JSON: \(context.debugDescription)")
@@ -62,6 +68,10 @@ class EventsApiManager {
             }
         })
         task.resume()
+    }
+    
+    func getTotalRecords() -> Int {
+        return self.totalRecords
     }
 }
 

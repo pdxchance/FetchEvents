@@ -19,9 +19,6 @@ class EventsViewController: UIViewController {
     
     var favorites : [Int] = []
     
-    var pageNumber : Int = 0
-    var totalRecords : Int = 0
-    
     let searchBar : UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.placeholder = "Search events"
@@ -77,11 +74,13 @@ class EventsViewController: UIViewController {
             self?.loadData(params: [:])
             DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
 
-                self?.tableView.cr.endLoadingMore()
+                guard let self = self else { return }
                 
-                let totalCount = self?.totalRecords ?? 0
-                if self?.events.count == totalCount {
-                    self?.tableView.cr.noticeNoMoreData()
+                self.tableView.cr.endLoadingMore()
+                
+                let totalCount = self.apiManager.getTotalRecords()
+                if self.events.count == totalCount {
+                    self.tableView.cr.noticeNoMoreData()
                 }
             })
         }
@@ -147,10 +146,14 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension EventsViewController {
     @objc func loadData(params : [String: Any]) {
-        apiManager.getEvents(query: "", completion: { events, total in
+        
+        guard let searchTerm = searchBar.text else {
+            return
+        }
+        
+        apiManager.getEvents(query: searchTerm, completion: { events, total in
             DispatchQueue.main.async {
                 self.events = events
-                self.totalRecords = total
                 self.tableView.reloadData()
             }
         })
@@ -158,8 +161,6 @@ extension EventsViewController {
     
     func resetSearch(loadData: Bool) {
         self.events = []
-        self.pageNumber = 0
-        self.totalRecords = 0
         if loadData {
             self.loadData(params: [:])
         }
