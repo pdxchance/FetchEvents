@@ -11,6 +11,8 @@ import CRRefresh
 
 class EventsViewController: UIViewController {
     
+    let apiManager = EventsApiManager.shared
+    
     let cellReuseID = "cellReuseID"
     
     var events : [Event] = []
@@ -84,8 +86,7 @@ class EventsViewController: UIViewController {
             })
         }
         
-        let params : [String: Any] = [:]
-        loadData(params: params)
+
     }
 
 }
@@ -146,46 +147,9 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension EventsViewController {
     @objc func loadData(params : [String: Any]) {
-        
-        let session = URLSession.shared
-                
-        pageNumber += 1
-        let authentication = "client_id=" + clientId + "&" + "client_secret=" + secret
-        let pageNumber = "page=" + String(pageNumber)
-        let query = "q=" +  self.searchBar.text!
-        
-        let queryParams = authentication + "&" + pageNumber + "&" + query
-        let url = URL(string: baseUrl + eventsEndpoint + "?" + queryParams)!
-        
-
-        
-        let task = session.dataTask(with: url, completionHandler: { [weak self] (data, response, error) in
-
-            do {
-                
-                let payload = try JSONDecoder().decode(EventModel.self, from: data!)
-                let events = payload.events ?? []
-                self?.totalRecords = payload.meta!.total!
-                
-                self?.events += events
-                
-                DispatchQueue.main.async {
-                    self?.tableView.reloadData()
-                }
-                
-            } catch DecodingError.keyNotFound(let key, let context) {
-                Swift.print("could not find key \(key) in JSON: \(context.debugDescription)")
-            } catch DecodingError.valueNotFound(let type, let context) {
-                Swift.print("could not find type \(type) in JSON: \(context.debugDescription)")
-            } catch DecodingError.typeMismatch(let type, let context) {
-                Swift.print("type mismatch for type \(type) in JSON: \(context.debugDescription)")
-            } catch DecodingError.dataCorrupted(let context) {
-                Swift.print("data found to be corrupted in JSON: \(context.debugDescription)")
-            } catch let error as NSError {
-                NSLog("Error in read(from:ofType:) domain= \(error.domain), description= \(error.localizedDescription)")
-            }
+        apiManager.getEvents(query: "", completion: { events, total in
+            self.events = events
         })
-        task.resume()
     }
     
     func resetSearch(loadData: Bool) {

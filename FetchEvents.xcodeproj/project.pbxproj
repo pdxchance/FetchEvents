@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4CD44BA027C0C99A007B204E /* EventsApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD44B9F27C0C99A007B204E /* EventsApiManager.swift */; };
 		510404E7DF3D3661B2A49247 /* Pods_FetchEvents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB7927EC5A82C988835C7D49 /* Pods_FetchEvents.framework */; };
 		CE03F4582660E81B004BE4C4 /* UpdateFavoritesProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE03F4572660E81B004BE4C4 /* UpdateFavoritesProtocol.swift */; };
 		CE03F4632660FD32004BE4C4 /* FetchEventsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE03F4622660FD32004BE4C4 /* FetchEventsTests.swift */; };
@@ -20,7 +21,6 @@
 		CEF29641265FC0F3004525B8 /* EventsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF29640265FC0F3004525B8 /* EventsViewController.swift */; };
 		CEF29643265FC210004525B8 /* Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF29642265FC210004525B8 /* Constraints.swift */; };
 		CEF29647265FC720004525B8 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF29646265FC720004525B8 /* EventTableViewCell.swift */; };
-		CEF29649265FCD8E004525B8 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF29648265FCD8E004525B8 /* Constants.swift */; };
 		CEF2967C265FE9D2004525B8 /* EventsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF2967B265FE9D2004525B8 /* EventsModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4CD44B9F27C0C99A007B204E /* EventsApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsApiManager.swift; sourceTree = "<group>"; };
 		7D83104B28CB9B01EA1CF9B3 /* Pods-FetchEvents.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FetchEvents.release.xcconfig"; path = "Target Support Files/Pods-FetchEvents/Pods-FetchEvents.release.xcconfig"; sourceTree = "<group>"; };
 		BE2EAFA981106EBA5B2E73D1 /* Pods-FetchEvents.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FetchEvents.debug.xcconfig"; path = "Target Support Files/Pods-FetchEvents/Pods-FetchEvents.debug.xcconfig"; sourceTree = "<group>"; };
 		CB7927EC5A82C988835C7D49 /* Pods_FetchEvents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FetchEvents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -54,7 +55,6 @@
 		CEF29640265FC0F3004525B8 /* EventsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsViewController.swift; sourceTree = "<group>"; };
 		CEF29642265FC210004525B8 /* Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constraints.swift; sourceTree = "<group>"; };
 		CEF29646265FC720004525B8 /* EventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
-		CEF29648265FCD8E004525B8 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CEF2967B265FE9D2004525B8 /* EventsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -132,7 +132,6 @@
 		CEAC0DC62660775A00D29AAA /* Constants */ = {
 			isa = PBXGroup;
 			children = (
-				CEF29648265FCD8E004525B8 /* Constants.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -180,6 +179,7 @@
 				CEF29637265FBBF5004525B8 /* LaunchScreen.storyboard */,
 				CEF2963A265FBBF5004525B8 /* Info.plist */,
 				CEF29632265FBBF4004525B8 /* FetchEvents.xcdatamodeld */,
+				4CD44B9F27C0C99A007B204E /* EventsApiManager.swift */,
 			);
 			path = FetchEvents;
 			sourceTree = "<group>";
@@ -351,6 +351,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CD44BA027C0C99A007B204E /* EventsApiManager.swift in Sources */,
 				CEAC0DC22660759300D29AAA /* EventsDetailViewController.swift in Sources */,
 				CEF2962A265FBBF4004525B8 /* AppDelegate.swift in Sources */,
 				CEF2967C265FE9D2004525B8 /* EventsModel.swift in Sources */,
@@ -360,7 +361,6 @@
 				CEF29647265FC720004525B8 /* EventTableViewCell.swift in Sources */,
 				CEF29641265FC0F3004525B8 /* EventsViewController.swift in Sources */,
 				CE03F4582660E81B004BE4C4 /* UpdateFavoritesProtocol.swift in Sources */,
-				CEF29649265FCD8E004525B8 /* Constants.swift in Sources */,
 				CEAC0DC02660650B00D29AAA /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
