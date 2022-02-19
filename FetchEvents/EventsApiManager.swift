@@ -19,26 +19,23 @@ class EventsApiManager {
     static let shared = EventsApiManager()
     private init() {}
     
-    var pageNumber = 0
+    var pageNumber = 1
     
     func getEvents(query: String, completion: @escaping eventCompletionHandler) {
         
         var components = URLComponents()
-        components.scheme = "https"
-        components.host = "api.seatgeek.com/2/"
-        components.path = "/events"
         components.queryItems = [
-            URLQueryItem(name: "client_id", value: clientId),
-            URLQueryItem(name: "client_secret", value: secret),
+            URLQueryItem(name: "q", value: query),
             URLQueryItem(name: "page", value: String(pageNumber)),
-            URLQueryItem(name: "q", value: query)
+            URLQueryItem(name: "client_id", value: clientId),
+            URLQueryItem(name: "client_secret", value: secret)
         ]
         
-        guard let route = URL(string: components.string!)?.host, let params = components.percentEncodedQuery else {
+        guard let params = components.percentEncodedQuery else {
             return
         }
         
-        let url = URL(string:"https://\(route)?\(params)")!
+        let url = URL(string:"https://api.seatgeek.com/2/events?\(params)")!
         
         let task = session.dataTask(with: url, completionHandler: { [weak self]  (data, response, error) in
             

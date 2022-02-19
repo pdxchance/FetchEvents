@@ -148,7 +148,11 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
 extension EventsViewController {
     @objc func loadData(params : [String: Any]) {
         apiManager.getEvents(query: "", completion: { events, total in
-            self.events = events
+            DispatchQueue.main.async {
+                self.events = events
+                self.totalRecords = total
+                self.tableView.reloadData()
+            }
         })
     }
     
