@@ -9,7 +9,7 @@ import Foundation
 
 public class EventViewModel {
     
-    private let event : Event
+    let event : Event
     
     init(event : Event) {
         self.event = event

@@ -17,7 +17,7 @@ class EventsViewController: UIViewController {
     
     let cellReuseID = "cellReuseID"
     
-    var events : [Event] = []
+    var viewModels : [EventViewModel] = []
         
     let searchBar : UISearchBar = {
         let searchBar = UISearchBar()
@@ -76,7 +76,7 @@ class EventsViewController: UIViewController {
                 self.tableView.cr.endLoadingMore()
                 
                 let totalCount = self.apiManager.getTotalRecords()
-                if self.events.count == totalCount {
+                if self.viewModels.count == totalCount {
                     self.tableView.cr.noticeNoMoreData()
                 }
             })
@@ -94,24 +94,19 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseID, for: indexPath) as! EventTableViewCell
         
         let event = apiManager.getEvent(index: indexPath.row)
-        let viewModel = EventViewModel(event: event)
+        let vm = EventViewModel(event: event)
         
-        cell.eventTitle.text = viewModel.eventTitle
-        cell.eventLocation.text = viewModel.eventLocation
-        cell.eventDate.text = viewModel.eventDateTime
+        cell.eventTitle.text = vm.eventTitle
+        cell.eventLocation.text = vm.eventLocation
+        cell.eventDate.text = vm.eventDateTime
         
         let url = URL(string: event.performers![0].image!)
         cell.eventImage.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), completionHandler: nil)
         
-        if favoritesManager.isFavorite(event: event) {
-            cell.favoriteImage.isHidden = false
-        } else {
-            cell.favoriteImage.isHidden = true
-        }
+        cell.favoriteImage.isHidden = favoritesManager.isFavorite(event: event)
         
         return cell
     }
@@ -126,11 +121,11 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let event = events[indexPath.row]
-        let isFavorite = favoritesManager.isFavorite(event: event)
+        let vm = viewModels[indexPath.row]
+        let isFavorite = favoritesManager.isFavorite(event: vm.event)
 
         let controller = EventsDetailViewController()
-        controller.event = event
+        controller.event = vm.event
         controller.delegate = self
         controller.isSelected = isFavorite
         
@@ -147,7 +142,9 @@ extension EventsViewController {
         
         apiManager.getEvents(query: searchTerm, completion: { events, total in
             DispatchQueue.main.async {
-                self.events = events
+                self.viewModels = events.map({ event in
+                    return EventViewModel(event: event)
+                })
                 self.tableView.reloadData()
             }
         })
