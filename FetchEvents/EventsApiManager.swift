@@ -22,15 +22,15 @@ class EventsApiManager {
     
     private var events = [Event]()
     
-    private var pageNumber = 1
-    private var totalRecords = 0
+    private var pageNum = 1
+    private var totalRecs = 0
     
     func getEvents(query: String, completion: @escaping eventCompletionHandler) {
         
         var components = URLComponents()
         components.queryItems = [
             URLQueryItem(name: "q", value: query),
-            URLQueryItem(name: "page", value: String(pageNumber)),
+            URLQueryItem(name: "page", value: String(pageNum)),
             URLQueryItem(name: "client_id", value: clientId),
             URLQueryItem(name: "client_secret", value: secret)
         ]
@@ -48,11 +48,12 @@ class EventsApiManager {
                 
                 let payload = try JSONDecoder().decode(EventModel.self, from: data!)
                 
-                self.events = payload.events ?? []
-                self.pageNumber += 1
-                self.totalRecords = payload.meta?.total ?? 0
+                let events = payload.events ?? []
+                self.events += events
+                self.pageNum += 1
+                self.totalRecs = payload.meta?.total ?? 0
                 
-                completion(self.events, self.totalRecords)
+                completion(self.events, self.totalRecs)
         
             } catch DecodingError.keyNotFound(let key, let context) {
                 Swift.print("could not find key \(key) in JSON: \(context.debugDescription)")
@@ -69,7 +70,12 @@ class EventsApiManager {
         task.resume()
     }
     
-    func getEvent(index: Int) -> Event {
+    func getEvent(index: Int) -> Event? {
+        
+        guard index < events.count else {
+            return nil
+        }
+        
         return events[index]
     }
     
@@ -77,8 +83,12 @@ class EventsApiManager {
         events = []
     }
     
+    func getArrayCount() -> Int {
+        return events.count
+    }
+    
     func getTotalRecords() -> Int {
-        return self.totalRecords
+        return self.totalRecs
     }
 }
 

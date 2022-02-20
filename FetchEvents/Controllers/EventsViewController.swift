@@ -89,7 +89,7 @@ class EventsViewController: UIViewController {
 
 extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return apiManager.getTotalRecords()
+        return apiManager.getArrayCount()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -97,16 +97,16 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseID, for: indexPath) as! EventTableViewCell
         
         let event = apiManager.getEvent(index: indexPath.row)
-        let vm = EventViewModel(event: event)
         
+        let vm = EventViewModel(event: event!)
         cell.eventTitle.text = vm.eventTitle
         cell.eventLocation.text = vm.eventLocation
         cell.eventDate.text = vm.eventDateTime
         
-        let url = URL(string: event.performers![0].image!)
+        let url = URL(string: (event?.performers![0].image!)!)
         cell.eventImage.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), completionHandler: nil)
         
-        cell.favoriteImage.isHidden = favoritesManager.isFavorite(event: event)
+        cell.favoriteImage.isHidden = favoritesManager.isFavorite(event: event!)
         
         return cell
     }
