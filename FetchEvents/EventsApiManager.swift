@@ -11,7 +11,7 @@ import SwiftUI
 private let clientId = "MjIwMjcyMDJ8MTYyMjA0OTEzNi4yMjU5NDk1"
 private let secret = "2673489515885151c07951a10eb5de55e02b3da5e8eb5ee3c23d784f0f44e91c"
 
-typealias eventCompletionHandler = ([Event], Int) -> Void
+typealias eventCompletionHandler = ([Event]) -> Void
 
 class EventsApiManager {
     
@@ -25,7 +25,7 @@ class EventsApiManager {
     private var pageNum = 1
     private var totalRecs = 0
     
-    func getEvents(query: String, completion: @escaping eventCompletionHandler) {
+    func queryEvents(query: String, completion: @escaping eventCompletionHandler) {
         
         var components = URLComponents()
         components.queryItems = [
@@ -53,7 +53,7 @@ class EventsApiManager {
                 self.pageNum += 1
                 self.totalRecs = payload.meta?.total ?? 0
                 
-                completion(self.events, self.totalRecs)
+                completion(self.events)
         
             } catch DecodingError.keyNotFound(let key, let context) {
                 Swift.print("could not find key \(key) in JSON: \(context.debugDescription)")
@@ -94,12 +94,12 @@ class EventsApiManager {
 
 class MockApiManager : EventsApiManager {
     
-    override func getEvents(query: String, completion: @escaping eventCompletionHandler) {
+    override func queryEvents(query: String, completion: @escaping eventCompletionHandler) {
 
         let event = Event(type: "", id: 1, datetimeUTC: "", venue: nil, datetimeTbd: false, performers: nil, isOpen: false, links: nil, datetime_local: "", timeTbd: false, shortTitle: "", visibleUntilUTC: "", stats: nil, taxonomies: nil, url: "", score: 0, announceDate: "", createdAt: "", dateTbd: true, title: "Some Event", popularity: 0, eventDescription: "", status: nil, accessMethod: nil, eventPromotion: false, announcements: nil, conditional: false, datetime_utc: "", themes: nil, domainInformation: nil)
         let events = [event]
         
-        completion(events, events.count)
+        completion(events)
     }
 }
 
