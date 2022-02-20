@@ -46,8 +46,6 @@ class EventsApiManager {
             do {
                 guard let self = self else { return }
                 
-                
-                
                 let payload = try JSONDecoder().decode(EventModel.self, from: data!)
                 
                 self.events = payload.events ?? []

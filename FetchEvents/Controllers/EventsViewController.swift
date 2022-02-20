@@ -68,7 +68,7 @@ class EventsViewController: UIViewController {
         }
         
         tableView.cr.addFootRefresh(animator: NormalFooterAnimator()) { [weak self] in
-            self?.loadData(params: [:])
+            self?.loadData()
             DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
 
                 guard let self = self else { return }
@@ -139,7 +139,7 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension EventsViewController {
-    @objc func loadData(params : [String: Any]) {
+    @objc func loadData() {
         
         guard let searchTerm = searchBar.text else {
             return
@@ -156,7 +156,7 @@ extension EventsViewController {
     func resetSearch(loadData: Bool) {
         apiManager.clearEvents()
         if loadData {
-            self.loadData(params: [:])
+            self.loadData()
         }
     }
 }
@@ -173,8 +173,8 @@ extension EventsViewController : UISearchBarDelegate {
         
         resetSearch(loadData: false)
                 
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(loadData(params:)), object: nil)
-        self.perform(#selector(loadData(params:)), with: nil, afterDelay: 0.5)
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(loadData), object: nil)
+        self.perform(#selector(loadData), with: nil, afterDelay: 0.5)
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
