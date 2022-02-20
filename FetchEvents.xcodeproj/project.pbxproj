@@ -10,6 +10,7 @@
 		4CD44BA027C0C99A007B204E /* EventsApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD44B9F27C0C99A007B204E /* EventsApiManager.swift */; };
 		4CD44BA227C1A5D0007B204E /* EventDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD44BA127C1A5D0007B204E /* EventDetailView.swift */; };
 		4CD44BA427C1F8D0007B204E /* FavoritesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD44BA327C1F8D0007B204E /* FavoritesManager.swift */; };
+		4CD44BA627C209BB007B204E /* FavoriteManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD44BA527C209BB007B204E /* FavoriteManagerTests.swift */; };
 		510404E7DF3D3661B2A49247 /* Pods_FetchEvents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB7927EC5A82C988835C7D49 /* Pods_FetchEvents.framework */; };
 		CE03F4582660E81B004BE4C4 /* UpdateFavoritesProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE03F4572660E81B004BE4C4 /* UpdateFavoritesProtocol.swift */; };
 		CE03F4632660FD32004BE4C4 /* FetchEventsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE03F4622660FD32004BE4C4 /* FetchEventsTests.swift */; };
@@ -40,6 +41,7 @@
 		4CD44B9F27C0C99A007B204E /* EventsApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsApiManager.swift; sourceTree = "<group>"; };
 		4CD44BA127C1A5D0007B204E /* EventDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailView.swift; sourceTree = "<group>"; };
 		4CD44BA327C1F8D0007B204E /* FavoritesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesManager.swift; sourceTree = "<group>"; };
+		4CD44BA527C209BB007B204E /* FavoriteManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteManagerTests.swift; sourceTree = "<group>"; };
 		7D83104B28CB9B01EA1CF9B3 /* Pods-FetchEvents.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FetchEvents.release.xcconfig"; path = "Target Support Files/Pods-FetchEvents/Pods-FetchEvents.release.xcconfig"; sourceTree = "<group>"; };
 		BE2EAFA981106EBA5B2E73D1 /* Pods-FetchEvents.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FetchEvents.debug.xcconfig"; path = "Target Support Files/Pods-FetchEvents/Pods-FetchEvents.debug.xcconfig"; sourceTree = "<group>"; };
 		CB7927EC5A82C988835C7D49 /* Pods_FetchEvents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FetchEvents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -103,6 +105,7 @@
 			children = (
 				CE03F4622660FD32004BE4C4 /* FetchEventsTests.swift */,
 				CE03F4642660FD32004BE4C4 /* Info.plist */,
+				4CD44BA527C209BB007B204E /* FavoriteManagerTests.swift */,
 			);
 			path = FetchEventsTests;
 			sourceTree = "<group>";
@@ -350,6 +353,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE03F4632660FD32004BE4C4 /* FetchEventsTests.swift in Sources */,
+				4CD44BA627C209BB007B204E /* FavoriteManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

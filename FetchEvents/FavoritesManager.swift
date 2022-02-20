@@ -15,18 +15,19 @@ class FavoritesManager {
     
     var favorites = [Favorite]()
     
+    init() {
+        self.favorites = getFavorites()
+    }
+    
     func getFavorites() -> [Favorite] {
         
         let defaults = UserDefaults.standard
         let keys = defaults.array(forKey: "Favorites")  as? [Int] ?? [Int]()
         
-        var favs = [Favorite]()
-        for key in keys {
-            let fav = Favorite(id: key)
-            favs.append(fav)
-        }
-        
-        self.favorites = favs
+        self.favorites = keys.map({ id in
+            let favorite = Favorite(id: id)
+            return favorite
+        })
         
         return favorites
     }
@@ -34,39 +35,51 @@ class FavoritesManager {
     func setFavorites() {
         
         let defaults = UserDefaults.standard
-        
-        var favs = [Int]()
-        for key in favorites {
-            let id = key.id
-            favs.append(id)
+        let favorites = self.favorites.map { favorite in
+            return favorite.id
         }
         
-        defaults.set(favs, forKey: "Favorites")
+        defaults.set(favorites, forKey: "Favorites")
+    }
+    
+    func clearFavorites() {
+        
+        favorites = []
+        
+        let defaults = UserDefaults.standard
+        defaults.set(nil, forKey: "Favorites")
     }
     
     func isFavorite(event : Event) -> Bool {
-        self.favorites = getFavorites()
-        if let index = favorites.firstIndex(where: { favorite in
-            return favorite.id == event.id
-        }) {
-            return true
-        } else {
-            return false
-        }
+
+        let index = favorites.firstIndex(where: { fav in
+            fav.id == event.id
+        })
+        
+        return index != nil
     }
     
     func removeFavorite(event : Event) {
-        self.favorites = getFavorites()
-        if let index = favorites.firstIndex(where: { favorite in
-            return favorite.id == event.id
-        }) {
-            favorites.remove(at: index)
-        } 
-        
 
+        let index = favorites.firstIndex(where: { favorite in
+            return favorite.id == event.id
+        })
+        
+        guard index != nil else { return }
+        
+        favorites.remove(at: index!)
+        setFavorites()
     }
     
     func addFavorite(favorite: Favorite) {
+        
+        let index = favorites.firstIndex { fav in
+            fav.id == favorite.id
+        }
+        
+        // we already have this favorite
+        guard index == nil else { return }
+        
         favorites.append(favorite)
         setFavorites()
     }
