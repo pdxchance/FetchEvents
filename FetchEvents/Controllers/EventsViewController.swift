@@ -13,12 +13,12 @@ class EventsViewController: UIViewController {
     
     let apiManager = EventsApiManager.shared
     
+    let favoritesManager = FavoritesManager()
+    
     let cellReuseID = "cellReuseID"
     
     var events : [Event] = []
-    
-    var favorites : [Int] = []
-    
+        
     let searchBar : UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.placeholder = "Search events"
@@ -39,10 +39,7 @@ class EventsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let defaults = UserDefaults.standard
-        self.favorites = defaults.array(forKey: "Favorites")  as? [Int] ?? [Int]()
-        
+            
         view.backgroundColor = .white
         
         tableView.register(EventTableViewCell.self, forCellReuseIdentifier: cellReuseID)
@@ -100,17 +97,17 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseID, for: indexPath) as! EventTableViewCell
         
-        let node = apiManager.getEvent(index: indexPath.row)
-        let viewModel = EventViewModel(event: node)
+        let event = apiManager.getEvent(index: indexPath.row)
+        let viewModel = EventViewModel(event: event)
         
         cell.eventTitle.text = viewModel.eventTitle
         cell.eventLocation.text = viewModel.eventLocation
         cell.eventDate.text = viewModel.eventDateTime
         
-        let url = URL(string: node.performers![0].image!)
+        let url = URL(string: event.performers![0].image!)
         cell.eventImage.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), completionHandler: nil)
         
-        if let index = favorites.firstIndex(where: { $0 == node.id }) {
+        if favoritesManager.isFavorite(event: event) {
             cell.favoriteImage.isHidden = false
         } else {
             cell.favoriteImage.isHidden = true
@@ -128,17 +125,14 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let event = events[indexPath.row]
         
-        var isSelected = false
-        if let index = favorites.firstIndex(where: { $0 == event.id }) {
-            isSelected = true
-        }
+        let event = events[indexPath.row]
+        let isFavorite = favoritesManager.isFavorite(event: event)
 
         let controller = EventsDetailViewController()
         controller.event = event
         controller.delegate = self
-        controller.isSelected = isSelected
+        controller.isSelected = isFavorite
         
         self.navigationController?.pushViewController(controller, animated: true)
     }
@@ -191,20 +185,18 @@ extension EventsViewController : UISearchBarDelegate {
 extension EventsViewController: UpdateFavoritesProtocol {
     func updateFavorites(event: Event, isSelected: Bool) {
         
-        let eventId = event.id ?? 0
-        if let index = favorites.firstIndex(where: { $0 == eventId }) {
-            if !isSelected {
-                favorites.remove(at: index)
-            }
+        guard event.id != nil else { return }
+        
+        let isSelected = favoritesManager.isFavorite(event: event)
+        
+        if !isSelected {
+            favoritesManager.removeFavorite(event: event)
         } else {
-            if isSelected {
-                favorites.append(eventId)
-            }
+            let favorite = Favorite(id: event.id!)
+            favoritesManager.addFavorite(favorite: favorite)
         }
                 
-        let defaults = UserDefaults.standard
-        defaults.set(self.favorites, forKey: "Favorites")
-        
+        favoritesManager.setFavorites()
         tableView.reloadData()
     }
 }
