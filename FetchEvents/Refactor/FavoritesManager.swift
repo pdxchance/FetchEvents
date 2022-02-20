@@ -13,6 +13,8 @@ struct Favorite {
 
 class FavoritesManager {
     
+    let keyName = "Favorites"
+    
     var favorites = [Favorite]()
     
     init() {
@@ -22,7 +24,7 @@ class FavoritesManager {
     func getFavorites() -> [Favorite] {
         
         let defaults = UserDefaults.standard
-        let keys = defaults.array(forKey: "Favorites")  as? [Int] ?? [Int]()
+        let keys = defaults.array(forKey: keyName)  as? [Int] ?? [Int]()
         
         self.favorites = keys.map({ id in
             let favorite = Favorite(id: id)
@@ -39,7 +41,7 @@ class FavoritesManager {
             return favorite.id
         }
         
-        defaults.set(favorites, forKey: "Favorites")
+        defaults.set(favorites, forKey: keyName)
     }
     
     func clearFavorites() {

@@ -92,6 +92,16 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		4CD44BA727C269BB007B204E /* Refactor */ = {
+			isa = PBXGroup;
+			children = (
+				4CD44B9F27C0C99A007B204E /* EventsApiManager.swift */,
+				4CD44BA127C1A5D0007B204E /* EventDetailView.swift */,
+				4CD44BA327C1F8D0007B204E /* FavoritesManager.swift */,
+			);
+			path = Refactor;
+			sourceTree = "<group>";
+		};
 		CE03F4592660F28B004BE4C4 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -174,6 +184,7 @@
 		CEF29628265FBBF4004525B8 /* FetchEvents */ = {
 			isa = PBXGroup;
 			children = (
+				4CD44BA727C269BB007B204E /* Refactor */,
 				CE03F4592660F28B004BE4C4 /* Protocols */,
 				CEAC0DC72660777800D29AAA /* Cells */,
 				CEAC0DC62660775A00D29AAA /* Constants */,
@@ -186,9 +197,6 @@
 				CEF29637265FBBF5004525B8 /* LaunchScreen.storyboard */,
 				CEF2963A265FBBF5004525B8 /* Info.plist */,
 				CEF29632265FBBF4004525B8 /* FetchEvents.xcdatamodeld */,
-				4CD44B9F27C0C99A007B204E /* EventsApiManager.swift */,
-				4CD44BA127C1A5D0007B204E /* EventDetailView.swift */,
-				4CD44BA327C1F8D0007B204E /* FavoritesManager.swift */,
 			);
 			path = FetchEvents;
 			sourceTree = "<group>";
