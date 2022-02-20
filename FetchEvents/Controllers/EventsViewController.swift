@@ -129,7 +129,7 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
         controller.delegate = self
         controller.isSelected = isFavorite
         
-        self.navigationController?.pushViewController(controller, animated: true)
+        show(controller, sender: self)
     }
 }
 
