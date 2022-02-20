@@ -96,17 +96,15 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseID, for: indexPath) as! EventTableViewCell
         
-        let event = apiManager.getEvent(index: indexPath.row)
-        
-        let vm = EventViewModel(event: event!)
+        let vm = viewModels[indexPath.row]
         cell.eventTitle.text = vm.eventTitle
         cell.eventLocation.text = vm.eventLocation
         cell.eventDate.text = vm.eventDateTime
         
-        let url = URL(string: (event?.performers![0].image!)!)
+        let url = URL(string: (vm.event.performers![0].image!))
         cell.eventImage.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), completionHandler: nil)
         
-        cell.favoriteImage.isHidden = favoritesManager.isFavorite(event: event!)
+        cell.favoriteImage.isHidden = favoritesManager.isFavorite(event: vm.event)
         
         return cell
     }
@@ -142,7 +140,7 @@ extension EventsViewController {
         
         apiManager.queryEvents(query: searchTerm, completion: { events in
             DispatchQueue.main.async {
-                self.viewModels = events.map({ event in
+                self.viewModels += events.map({ event in
                     return EventViewModel(event: event)
                 })
                 self.tableView.reloadData()
@@ -155,7 +153,6 @@ extension EventsViewController {
         if loadData {
             self.loadData()
         }
-        tableView.reloadData()
     }
 }
 
