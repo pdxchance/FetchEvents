@@ -79,8 +79,10 @@ class EventsApiManager {
         return events[index]
     }
     
-    func clearEvents() {
+    func reset() {
         events = []
+        pageNum = 1
+        totalRecs = 0
     }
     
     func getArrayCount() -> Int {

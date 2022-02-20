@@ -149,7 +149,7 @@ extension EventsViewController {
     }
     
     func resetSearch(loadData: Bool) {
-        apiManager.clearEvents()
+        apiManager.reset()
         if loadData {
             self.loadData()
         }
