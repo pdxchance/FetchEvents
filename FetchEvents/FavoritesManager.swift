@@ -77,7 +77,6 @@ class FavoritesManager {
             fav.id == favorite.id
         }
         
-        // we already have this favorite
         guard index == nil else { return }
         
         favorites.append(favorite)

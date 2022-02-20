@@ -58,6 +58,16 @@ class FavoriteManagerTests: XCTestCase {
         //Test remaining favorite
         XCTAssert(manager.isFavorite(event: event2) == true)
         
+        //Remove last node
+        manager.removeFavorite(event: event2)
+        let favorites3 = manager.getFavorites()
+        XCTAssert(favorites3.count == 0)
+        
+        //Test removing empty list
+        manager.removeFavorite(event: event2)
+        let favorites4 = manager.getFavorites()
+        XCTAssert(favorites4.count == 0)
+        
     }
 
     func testPerformanceExample() throws {
