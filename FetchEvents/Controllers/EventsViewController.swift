@@ -92,7 +92,7 @@ class EventsViewController: UIViewController {
 
 extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return events.count
+        return apiManager.getTotalRecords()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -100,7 +100,7 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseID, for: indexPath) as! EventTableViewCell
         
-        let node = events[indexPath.row]
+        let node = apiManager.getEvent(index: indexPath.row)
         let viewModel = EventViewModel(event: node)
         
         cell.eventTitle.text = viewModel.eventTitle
@@ -160,7 +160,7 @@ extension EventsViewController {
     }
     
     func resetSearch(loadData: Bool) {
-        self.events = []
+        apiManager.clearEvents()
         if loadData {
             self.loadData(params: [:])
         }

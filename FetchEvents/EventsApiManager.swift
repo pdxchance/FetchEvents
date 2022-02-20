@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 private let clientId = "MjIwMjcyMDJ8MTYyMjA0OTEzNi4yMjU5NDk1"
 private let secret = "2673489515885151c07951a10eb5de55e02b3da5e8eb5ee3c23d784f0f44e91c"
@@ -68,6 +69,14 @@ class EventsApiManager {
             }
         })
         task.resume()
+    }
+    
+    func getEvent(index: Int) -> Event {
+        return events[index]
+    }
+    
+    func clearEvents() {
+        events = []
     }
     
     func getTotalRecords() -> Int {
