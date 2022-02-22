@@ -138,7 +138,7 @@ extension EventsViewController {
         
         apiManager.queryEvents(query: searchTerm, completion: { events in
             DispatchQueue.main.async {
-                self.viewModels += events.map({ event in
+                self.viewModels = events.map({ event in
                     return EventViewModel(event: event)
                 })
                 self.tableView.reloadData()

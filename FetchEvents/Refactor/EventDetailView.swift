@@ -9,7 +9,7 @@ import UIKit
 
 class EventDetailView: UIView {
     
-    weak var delegate : UpdateFavoritesProtocol?
+    weak var delegate : ButtonTappedProtocol?
     
     let contentStackView : UIStackView = {
        let contentStackView = UIStackView()
@@ -88,10 +88,12 @@ class EventDetailView: UIView {
     }
     
     @objc private func favoriteButtonTapped() {
-        favoriteImage.isSelected = !favoriteImage.isSelected
-        
+            
         guard delegate != nil else { return }
-        delegate?.updateFavorites(isSelected: favoriteImage.isSelected)
+        
+        favoriteImage.isSelected = !favoriteImage.isSelected
+
+        delegate?.favoriteButtonTapped(isSelected: favoriteImage.isSelected)
     }
     
 }
