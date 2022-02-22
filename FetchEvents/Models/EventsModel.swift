@@ -12,6 +12,20 @@
 
 import Foundation
 
+struct CompactEventModel {
+    let events: [CompactEvent]?
+    let meta: Meta?
+}
+
+struct CompactEvent {
+    let id: Int?
+    let title: String?
+    let city: String?
+    let state: String?
+    let datetime_local: String?
+    let image: String?
+}
+
 // MARK: - EventModel
 struct EventModel: Codable {
     let events: [Event]?

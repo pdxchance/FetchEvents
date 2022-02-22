@@ -6,21 +6,20 @@
 //
 
 import Foundation
-import SwiftUI
 
 private let clientId = "MjIwMjcyMDJ8MTYyMjA0OTEzNi4yMjU5NDk1"
 private let secret = "2673489515885151c07951a10eb5de55e02b3da5e8eb5ee3c23d784f0f44e91c"
 
-typealias eventCompletionHandler = ([Event]) -> Void
+typealias eventCompletionHandler = ([CompactEvent]) -> Void
 
 class EventsApiManager {
     
-    let session = URLSession.shared
+    private let session = URLSession.shared
 
     static let shared = EventsApiManager()
     private init() {}
     
-    private var events = [Event]()
+    private var events = [CompactEvent]()
     
     private var pageNum = 1
     private var totalRecs = 0
@@ -44,16 +43,31 @@ class EventsApiManager {
         let task = session.dataTask(with: url, completionHandler: { [weak self]  (data, response, error) in
             
             do {
-                guard let self = self else { return }
+                guard let self = self, let data = data else { return }
+                                
+                do {
+                    // make sure this JSON is in the format we expect
+                    if let eventModel = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                        
+                        let events = eventModel["events"] as! [Event] //{
+                            
+                            self.events += events.map({ event in
+                                return CompactEvent(id: event.id, title: event.title, city: event.venue?.city, state: event.venue?.state, datetime_local: event.datetime_local, image: event.performers?[0].image)
+                            })
+                            
+                            if let meta = eventModel["meta"] as? Meta {
+                                self.totalRecs = meta.total ?? 0
+
+                            }
+                            self.pageNum += 1
+                            completion(self.events)
+                        //}
+                    }
+                } catch let error as NSError {
+                    print("Failed to load: \(error.localizedDescription)")
+                }
                 
-                let payload = try JSONDecoder().decode(EventModel.self, from: data!)
-                
-                let events = payload.events ?? []
-                self.events += events
-                self.pageNum += 1
-                self.totalRecs = payload.meta?.total ?? 0
-                
-                completion(self.events)
+
         
             } catch DecodingError.keyNotFound(let key, let context) {
                 Swift.print("could not find key \(key) in JSON: \(context.debugDescription)")
@@ -70,7 +84,7 @@ class EventsApiManager {
         task.resume()
     }
     
-    func getEvent(index: Int) -> Event? {
+    func getEvent(index: Int) -> CompactEvent? {
         
         guard index < events.count else {
             return nil
@@ -98,7 +112,7 @@ class MockApiManager : EventsApiManager {
     
     override func queryEvents(query: String, completion: @escaping eventCompletionHandler) {
 
-        let event = Event(type: "", id: 1, datetimeUTC: "", venue: nil, datetimeTbd: false, performers: nil, isOpen: false, links: nil, datetime_local: "", timeTbd: false, shortTitle: "", visibleUntilUTC: "", stats: nil, taxonomies: nil, url: "", score: 0, announceDate: "", createdAt: "", dateTbd: true, title: "Some Event", popularity: 0, eventDescription: "", status: nil, accessMethod: nil, eventPromotion: false, announcements: nil, conditional: false, datetime_utc: "", themes: nil, domainInformation: nil)
+        let event = CompactEvent(id: 1, title: "", city: "", state: "", datetime_local: "", image: "")
         let events = [event]
         
         completion(events)

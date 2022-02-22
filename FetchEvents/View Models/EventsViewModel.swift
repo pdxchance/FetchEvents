@@ -9,9 +9,9 @@ import Foundation
 
 public class EventViewModel {
     
-    let event : Event
+    let event : CompactEvent
     
-    init(event : Event) {
+    init(event : CompactEvent) {
         self.event = event
     }
     
@@ -20,8 +20,8 @@ public class EventViewModel {
     }
     
     public var eventLocation : String {
-        let city = event.venue?.city ?? ""
-        let state = event.venue?.state ?? ""
+        let city = event.city ?? ""
+        let state = event.state ?? ""
         
         return city + ", " + state
     }
@@ -36,5 +36,9 @@ public class EventViewModel {
         
         return convertUTC(timestamp: dateTime)!
 
+    }
+    
+    public var image: String {
+        return event.image ?? ""
     }
 }

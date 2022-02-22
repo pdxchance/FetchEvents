@@ -52,7 +52,7 @@ class FavoritesManager {
         defaults.set(nil, forKey: "Favorites")
     }
     
-    func isFavorite(event : Event) -> Bool {
+    func isFavorite(event : CompactEvent) -> Bool {
 
         let index = favorites.firstIndex(where: { fav in
             fav.id == event.id
@@ -61,7 +61,7 @@ class FavoritesManager {
         return index != nil
     }
     
-    func removeFavorite(event : Event) {
+    func removeFavorite(event : CompactEvent) {
 
         let index = favorites.firstIndex(where: { favorite in
             return favorite.id == event.id
