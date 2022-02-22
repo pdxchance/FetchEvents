@@ -101,7 +101,7 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
         cell.eventLocation.text = vm.eventLocation
         cell.eventDate.text = vm.eventDateTime
         
-        let url = URL(string: (vm.event.performers![0].image!))
+        let url = URL(string: vm.image)
         cell.eventImage.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), completionHandler: nil)
         
         cell.favoriteImage.isHidden = !favoritesManager.isFavorite(event: vm.event)

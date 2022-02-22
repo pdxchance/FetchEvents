@@ -9,7 +9,7 @@ import UIKit
 
 class EventsDetailViewController: UIViewController, UpdateFavoritesProtocol {
 
-    var event : Event?
+    var event : CompactEvent?
     
     weak var delegate : RefreshProtocol?
     
@@ -40,8 +40,10 @@ class EventsDetailViewController: UIViewController, UpdateFavoritesProtocol {
             eventDetailView.favoriteImage.isSelected = favoritesManager.isFavorite(event: event!)
         }
         
-        let url = URL(string: (event?.performers![0].image!)!)
-        eventDetailView.eventImage.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), completionHandler: nil)
+        if let image = event?.image {
+            let url = URL(string: image)
+            eventDetailView.eventImage.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), completionHandler: nil)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
