@@ -11,7 +11,7 @@ import CRRefresh
 
 class EventsViewController: UIViewController {
     
-    let apiManager = EventsApiManager.shared
+    let eventService = EventsApiManager.shared
     
     let favoritesManager = FavoritesManager()
     
@@ -47,6 +47,7 @@ class EventsViewController: UIViewController {
         tableView.dataSource = self
         
         searchBar.delegate = self
+        searchBar.autocapitalizationType = .none
 
         view.addSubview(searchBar)
         view.addSubview(tableView)
@@ -75,7 +76,7 @@ class EventsViewController: UIViewController {
                 
                 self.tableView.cr.endLoadingMore()
                 
-                let totalCount = self.apiManager.getTotalRecords()
+                let totalCount = self.eventService.getTotalRecords()
                 if self.viewModels.count == totalCount {
                     self.tableView.cr.noticeNoMoreData()
                 }
@@ -89,7 +90,7 @@ class EventsViewController: UIViewController {
 
 extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return apiManager.getArrayCount()
+        return eventService.getArrayCount()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -136,7 +137,7 @@ extension EventsViewController {
             return
         }
         
-        apiManager.queryEvents(query: searchTerm, completion: { events in
+        eventService.queryEvents(query: searchTerm, completion: { events in
             DispatchQueue.main.async {
                 self.viewModels = events.map({ event in
                     return EventViewModel(event: event)
@@ -147,7 +148,7 @@ extension EventsViewController {
     }
     
     func resetSearch(loadData: Bool) {
-        apiManager.reset()
+        eventService.reset()
         if loadData {
             self.loadData()
         }
