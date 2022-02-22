@@ -22,22 +22,18 @@ class EventsDetailViewController: UIViewController, ButtonTappedProtocol {
         backButton.title = "Back"
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
         
-        view.backgroundColor = .white
-        
         let eventDetailView = EventDetailView(frame: CGRect.zero)
         eventDetailView.delegate = self
         view.addSubview(eventDetailView)
-        
         eventDetailView.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         
         let viewModel = EventViewModel(event: event!)
-        
         eventDetailView.eventTitle.text = viewModel.eventTitle
         eventDetailView.eventLocation.text = viewModel.eventLocation
         eventDetailView.eventDate.text = viewModel.eventDateTime
         
-        if let favoritesManager = favoritesManager {
-            eventDetailView.favoriteImage.isSelected = favoritesManager.isFavorite(event: event!)
+        if let favoritesManager = favoritesManager, let event = event {
+            eventDetailView.favoriteImage.isSelected = favoritesManager.isFavorite(event: event)
         }
         
         if let image = event?.image {
