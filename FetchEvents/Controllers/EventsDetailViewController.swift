@@ -7,64 +7,13 @@
 
 import UIKit
 
-class EventsDetailViewController: UIViewController {
-    
+class EventsDetailViewController: UIViewController, UpdateFavoritesProtocol {
+
     var event : Event?
     
-    var delegate : UpdateFavoritesProtocol?
+    weak var delegate : RefreshProtocol?
     
-    var isSelected: Bool?
-
-    let contentStackView : UIStackView = {
-       let contentStackView = UIStackView()
-        contentStackView.axis = .vertical
-        contentStackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        return contentStackView
-    }()
-    
-    let eventTitle : UILabel = {
-        let eventTitle = UILabel()
-        eventTitle.font = .systemFont(ofSize: 24.0, weight: .black)
-        eventTitle.numberOfLines = 0
-        eventTitle.lineBreakMode = .byWordWrapping
-        eventTitle.translatesAutoresizingMaskIntoConstraints = false
-        
-        return eventTitle
-    }()
-    
-    let eventImage : UIImageView = {
-       let eventImage = UIImageView()
-        eventImage.contentMode = .scaleToFill
-        eventImage.translatesAutoresizingMaskIntoConstraints = false
-        
-        return eventImage
-    }()
-    
-    let eventLocation : UILabel = {
-        let eventLocation = UILabel()
-        eventLocation.translatesAutoresizingMaskIntoConstraints = false
-        
-        return eventLocation
-    }()
-    
-    let eventDate : UILabel = {
-        let eventDate = UILabel()
-        eventDate.font = .systemFont(ofSize: 17.0, weight: .thin)
-        eventDate.translatesAutoresizingMaskIntoConstraints = false
-        
-        return eventDate
-    }()
-    
-    let favoriteImage : UIButton = {
-       let favoriteImage = UIButton()
-        favoriteImage.contentMode = .scaleAspectFit
-        favoriteImage.setImage(UIImage(named: "icons8-like"), for: .selected)
-        favoriteImage.setImage(UIImage(named: "icons8-hearts"), for: .normal)
-        favoriteImage.translatesAutoresizingMaskIntoConstraints = false
-
-        return favoriteImage
-    }()
+    var favoritesManager : FavoritesManager?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,36 +24,38 @@ class EventsDetailViewController: UIViewController {
         
         view.backgroundColor = .white
         
-        favoriteImage.addTarget(self, action: #selector(toggleFavorites), for: .touchUpInside)
-        favoriteImage.isSelected = isSelected ?? false
-
-        view.addSubview(contentStackView)
-        contentStackView.addArrangedSubview(eventTitle)
-        contentStackView.addArrangedSubview(eventImage)
-        contentStackView.addArrangedSubview(eventLocation)
-        contentStackView.addArrangedSubview(eventDate)
-        view.addSubview(favoriteImage)
+        let eventDetailView = EventDetailView(frame: CGRect.zero)
+        eventDetailView.delegate = self
+        view.addSubview(eventDetailView)
+        
+        eventDetailView.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         
         let viewModel = EventViewModel(event: event!)
         
-        eventTitle.text = viewModel.eventTitle
-        eventLocation.text = viewModel.eventLocation
-        eventDate.text = viewModel.eventDateTime
+        eventDetailView.eventTitle.text = viewModel.eventTitle
+        eventDetailView.eventLocation.text = viewModel.eventLocation
+        eventDetailView.eventDate.text = viewModel.eventDateTime
+        
+        if let favoritesManager = favoritesManager {
+            eventDetailView.favoriteImage.isSelected = favoritesManager.isFavorite(event: event!)
+        }
         
         let url = URL(string: (event?.performers![0].image!)!)
-            self.eventImage.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), completionHandler: nil)
-        
-        contentStackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor)
-        
-        favoriteImage.anchor(top: eventImage.topAnchor, bottom: nil, leading: nil, trailing: eventImage.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0), size: .init(width: 50, height: 50))
+        eventDetailView.eventImage.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), completionHandler: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        self.delegate!.updateFavorites(event: event!, isSelected: favoriteImage.isSelected)
-        
+        super.viewWillDisappear(animated)
+        delegate?.refresh()
     }
     
-    @objc func toggleFavorites() {
-        favoriteImage.isSelected = !favoriteImage.isSelected
+    func updateFavorites(isSelected: Bool) {
+        
+        let favorite = Favorite(id: (event?.id)!)
+        if isSelected {
+            favoritesManager?.addFavorite(favorite: favorite)
+        } else {
+            favoritesManager?.removeFavorite(event: self.event!)
+        }
     }
 }
