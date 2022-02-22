@@ -39,27 +39,22 @@ class EventsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-            
+        
+        title = "Fetch Events"
         view.backgroundColor = .white
+    
+        view.addSubview(searchBar)
+        view.addSubview(tableView)
+        
+        searchBar.returnKeyType = .done
+        searchBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        searchBar.delegate = self
+        searchBar.autocapitalizationType = .none
         
         tableView.register(EventTableViewCell.self, forCellReuseIdentifier: cellReuseID)
         tableView.delegate = self
         tableView.dataSource = self
-        
-        searchBar.delegate = self
-        searchBar.autocapitalizationType = .none
-
-        view.addSubview(searchBar)
-        view.addSubview(tableView)
-        
-        title = "Fetch Events"
-        
-        searchBar.returnKeyType = .done
-        
-        searchBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
-        
         tableView.anchor(top: searchBar.bottomAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
-        
         tableView.cr.addHeadRefresh(animator: NormalHeaderAnimator()) { [weak self] in
             self?.resetSearch(loadData: true)
             DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {

@@ -15,14 +15,16 @@ class EventsDetailViewController: UIViewController, ButtonTappedProtocol {
     
     var favoritesManager : FavoritesManager?
     
+    let eventDetailView = EventDetailView(frame: CGRect.zero)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let backButton = UIBarButtonItem()
         backButton.title = "Back"
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
+        view.backgroundColor = .white
         
-        let eventDetailView = EventDetailView(frame: CGRect.zero)
         eventDetailView.delegate = self
         view.addSubview(eventDetailView)
         eventDetailView.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
@@ -35,6 +37,12 @@ class EventsDetailViewController: UIViewController, ButtonTappedProtocol {
         if let favoritesManager = favoritesManager, let event = event {
             eventDetailView.favoriteImage.isSelected = favoritesManager.isFavorite(event: event)
         }
+        
+
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
         if let image = event?.image {
             let url = URL(string: image)
