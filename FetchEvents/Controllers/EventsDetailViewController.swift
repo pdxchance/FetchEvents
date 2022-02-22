@@ -8,7 +8,7 @@
 import UIKit
 
 class EventsDetailViewController: UIViewController, ButtonTappedProtocol {
-
+    
     var event : CompactEvent?
     
     weak var delegate : RefreshProtocol?
@@ -20,25 +20,15 @@ class EventsDetailViewController: UIViewController, ButtonTappedProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let backButton = UIBarButtonItem()
-        backButton.title = "Back"
-        self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
         view.backgroundColor = .white
         
-        eventDetailView.delegate = self
-        view.addSubview(eventDetailView)
-        eventDetailView.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        configureBackButton()
         
-        let viewModel = EventViewModel(event: event!)
-        eventDetailView.eventTitle.text = viewModel.eventTitle
-        eventDetailView.eventLocation.text = viewModel.eventLocation
-        eventDetailView.eventDate.text = viewModel.eventDateTime
+        configureView()
         
-        if let favoritesManager = favoritesManager, let event = event {
-            eventDetailView.favoriteImage.isSelected = favoritesManager.isFavorite(event: event)
-        }
+        loadEvent()
         
-
+        setFavorite()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -69,4 +59,32 @@ class EventsDetailViewController: UIViewController, ButtonTappedProtocol {
             }
         }
     }
+    
+    fileprivate func configureBackButton() {
+        let backButton = UIBarButtonItem()
+        backButton.title = "Back"
+        self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
+    }
+    
+    fileprivate func configureView() {
+        eventDetailView.delegate = self
+        view.addSubview(eventDetailView)
+        eventDetailView.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+    }
+    
+    fileprivate func loadEvent() {
+        let viewModel = EventViewModel(event: event!)
+        eventDetailView.eventTitle.text = viewModel.eventTitle
+        eventDetailView.eventLocation.text = viewModel.eventLocation
+        eventDetailView.eventDate.text = viewModel.eventDateTime
+    }
+    
+    fileprivate func setFavorite() {
+        if let favoritesManager = favoritesManager, let event = event {
+            eventDetailView.favoriteImage.isSelected = favoritesManager.isFavorite(event: event)
+        }
+    }
+    
+    
+    
 }
