@@ -12,7 +12,7 @@ struct Favorite {
 }
 
 class FavoritesManager {
-    
+        
     let keyName = "Favorites"
     
     var favorites = [Favorite]()

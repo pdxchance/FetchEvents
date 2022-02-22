@@ -104,7 +104,7 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
         let url = URL(string: (vm.event.performers![0].image!))
         cell.eventImage.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), completionHandler: nil)
         
-        cell.favoriteImage.isHidden = favoritesManager.isFavorite(event: vm.event)
+        cell.favoriteImage.isHidden = !favoritesManager.isFavorite(event: vm.event)
         
         return cell
     }
@@ -120,13 +120,11 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let vm = viewModels[indexPath.row]
-        let isFavorite = favoritesManager.isFavorite(event: vm.event)
 
         let controller = EventsDetailViewController()
         controller.event = vm.event
         controller.delegate = self
-        controller.isSelected = isFavorite
-        
+        controller.favoritesManager = favoritesManager
         show(controller, sender: self)
     }
 }
@@ -177,21 +175,8 @@ extension EventsViewController : UISearchBarDelegate {
     }
 }
 
-extension EventsViewController: UpdateFavoritesProtocol {
-    func updateFavorites(event: Event, isSelected: Bool) {
-        
-        guard event.id != nil else { return }
-        
-        let isSelected = favoritesManager.isFavorite(event: event)
-        
-        if !isSelected {
-            favoritesManager.removeFavorite(event: event)
-        } else {
-            let favorite = Favorite(id: event.id!)
-            favoritesManager.addFavorite(favorite: favorite)
-        }
-                
-        favoritesManager.setFavorites()
+extension EventsViewController : RefreshProtocol {
+    func refresh() {
         tableView.reloadData()
     }
 }

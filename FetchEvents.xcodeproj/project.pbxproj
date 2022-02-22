@@ -146,13 +146,6 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		CEAC0DC62660775A00D29AAA /* Constants */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Constants;
-			sourceTree = "<group>";
-		};
 		CEAC0DC72660777800D29AAA /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -187,7 +180,6 @@
 				4CD44BA727C269BB007B204E /* Refactor */,
 				CE03F4592660F28B004BE4C4 /* Protocols */,
 				CEAC0DC72660777800D29AAA /* Cells */,
-				CEAC0DC62660775A00D29AAA /* Constants */,
 				CEAC0DC52660774800D29AAA /* Utils */,
 				CEAC0DC42660773200D29AAA /* Controllers */,
 				CEAC0DC32660771900D29AAA /* View Models */,
@@ -572,7 +564,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = M522U4LXZT;
+				DEVELOPMENT_TEAM = Y8JUUV8U24;
 				INFOPLIST_FILE = FetchEvents/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -592,7 +584,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = M522U4LXZT;
+				DEVELOPMENT_TEAM = Y8JUUV8U24;
 				INFOPLIST_FILE = FetchEvents/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

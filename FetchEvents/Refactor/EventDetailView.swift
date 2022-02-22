@@ -9,6 +9,8 @@ import UIKit
 
 class EventDetailView: UIView {
     
+    weak var delegate : UpdateFavoritesProtocol?
+    
     let contentStackView : UIStackView = {
        let contentStackView = UIStackView()
         contentStackView.axis = .vertical
@@ -70,6 +72,8 @@ class EventDetailView: UIView {
         contentStackView.addArrangedSubview(eventDate)
         addSubview(favoriteImage)
         
+        favoriteImage.addTarget(self, action: #selector(favoriteButtonTapped), for: .touchUpInside)
+        
         contentStackView.anchor(top: self.topAnchor, bottom: nil, leading: self.leadingAnchor, trailing: self.trailingAnchor)
         
         favoriteImage.anchor(top: eventImage.topAnchor, bottom: nil, leading: nil, trailing: eventImage.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0), size: .init(width: 50, height: 50))
@@ -77,6 +81,17 @@ class EventDetailView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        return favoriteImage
+    }
+    
+    @objc private func favoriteButtonTapped() {
+        favoriteImage.isSelected = !favoriteImage.isSelected
+        
+        guard delegate != nil else { return }
+        delegate?.updateFavorites(isSelected: favoriteImage.isSelected)
     }
     
 }

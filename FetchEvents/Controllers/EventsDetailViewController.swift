@@ -7,24 +7,13 @@
 
 import UIKit
 
-class EventsDetailViewController: UIViewController {
-    
+class EventsDetailViewController: UIViewController, UpdateFavoritesProtocol {
+
     var event : Event?
     
-    var delegate : UpdateFavoritesProtocol?
+    weak var delegate : RefreshProtocol?
     
-    var isSelected: Bool?
-
-    
-    let favoriteImage : UIButton = {
-       let favoriteImage = UIButton()
-        favoriteImage.contentMode = .scaleAspectFit
-        favoriteImage.setImage(UIImage(named: "icons8-like"), for: .selected)
-        favoriteImage.setImage(UIImage(named: "icons8-hearts"), for: .normal)
-        favoriteImage.translatesAutoresizingMaskIntoConstraints = false
-
-        return favoriteImage
-    }()
+    var favoritesManager : FavoritesManager?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,10 +24,8 @@ class EventsDetailViewController: UIViewController {
         
         view.backgroundColor = .white
         
-        favoriteImage.addTarget(self, action: #selector(toggleFavorites), for: .touchUpInside)
-        favoriteImage.isSelected = isSelected ?? false
-        
         let eventDetailView = EventDetailView(frame: CGRect.zero)
+        eventDetailView.delegate = self
         view.addSubview(eventDetailView)
         
         eventDetailView.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
@@ -49,16 +36,26 @@ class EventsDetailViewController: UIViewController {
         eventDetailView.eventLocation.text = viewModel.eventLocation
         eventDetailView.eventDate.text = viewModel.eventDateTime
         
+        if let favoritesManager = favoritesManager {
+            eventDetailView.favoriteImage.isSelected = favoritesManager.isFavorite(event: event!)
+        }
+        
         let url = URL(string: (event?.performers![0].image!)!)
         eventDetailView.eventImage.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), completionHandler: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        self.delegate!.updateFavorites(event: event!, isSelected: favoriteImage.isSelected)
-        
+        super.viewWillDisappear(animated)
+        delegate?.refresh()
     }
     
-    @objc func toggleFavorites() {
-        favoriteImage.isSelected = !favoriteImage.isSelected
+    func updateFavorites(isSelected: Bool) {
+        
+        let favorite = Favorite(id: (event?.id)!)
+        if isSelected {
+            favoritesManager?.addFavorite(favorite: favorite)
+        } else {
+            favoritesManager?.removeFavorite(event: self.event!)
+        }
     }
 }

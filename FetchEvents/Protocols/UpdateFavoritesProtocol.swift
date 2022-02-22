@@ -7,6 +7,10 @@
 
 import Foundation
 
-protocol UpdateFavoritesProtocol {
-    func updateFavorites(event: Event, isSelected: Bool)
+protocol UpdateFavoritesProtocol : NSObjectProtocol {
+    func updateFavorites(isSelected: Bool)
+}
+
+protocol RefreshProtocol : NSObjectProtocol {
+    func refresh()
 }
