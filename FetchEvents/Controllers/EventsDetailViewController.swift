@@ -7,7 +7,7 @@
 
 import UIKit
 
-class EventsDetailViewController: UIViewController, UpdateFavoritesProtocol {
+class EventsDetailViewController: UIViewController, ButtonTappedProtocol {
 
     var event : CompactEvent?
     
@@ -51,13 +51,18 @@ class EventsDetailViewController: UIViewController, UpdateFavoritesProtocol {
         delegate?.refresh()
     }
     
-    func updateFavorites(isSelected: Bool) {
+    func favoriteButtonTapped(isSelected: Bool) {
         
-        let favorite = Favorite(id: (event?.id)!)
-        if isSelected {
-            favoritesManager?.addFavorite(favorite: favorite)
-        } else {
-            favoritesManager?.removeFavorite(event: self.event!)
+        guard let event = event else { return }
+        
+        if let id = event.id {
+            
+            let favorite = Favorite(id: id)
+            if isSelected {
+                favoritesManager?.addFavorite(favorite: favorite)
+            } else {
+                favoritesManager?.removeFavorite(event: event)
+            }
         }
     }
 }

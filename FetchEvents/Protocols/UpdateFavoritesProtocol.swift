@@ -7,8 +7,8 @@
 
 import Foundation
 
-protocol UpdateFavoritesProtocol : NSObjectProtocol {
-    func updateFavorites(isSelected: Bool)
+protocol ButtonTappedProtocol : NSObjectProtocol {
+    func favoriteButtonTapped(isSelected: Bool)
 }
 
 protocol RefreshProtocol : NSObjectProtocol {
