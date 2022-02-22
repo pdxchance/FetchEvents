@@ -49,36 +49,37 @@ class EventsApiManager {
                     // make sure this JSON is in the format we expect
                     if let eventModel = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
                         
-                        let events = eventModel["events"] as! [Event] //{
+                        
+                        let events = eventModel["events"] as! [[String:Any]]
+                        
+                        for event in events {
+                            let id = event["id"] as! Int
+                            let title = event["title"] as! String
                             
-                            self.events += events.map({ event in
-                                return CompactEvent(id: event.id, title: event.title, city: event.venue?.city, state: event.venue?.state, datetime_local: event.datetime_local, image: event.performers?[0].image)
-                            })
+                            let venue = event["venue"] as! [String: Any]
+                            let city = venue["state"] as! String
+                            let state = venue["city"] as! String
                             
-                            if let meta = eventModel["meta"] as? Meta {
-                                self.totalRecs = meta.total ?? 0
-
-                            }
-                            self.pageNum += 1
-                            completion(self.events)
-                        //}
+                            let datetime = event["datetime_local"] as! String
+                            
+                            let performers = event["performers"] as! [[String: Any]]
+                            let performer = performers[0]
+                            let image = performer["image"] as! String
+                        
+                            let compactEvent = CompactEvent(id: id, title: title, city: city, state: state, datetime_local: datetime, image: image)
+                            self.events.append(compactEvent)
+                        }
+                        
+                        let meta = eventModel["meta"] as! [String:Any]
+                        let totalRecs = meta["total"] as! Int
+                        self.totalRecs = totalRecs
+                        
+                        self.pageNum += 1
+                        completion(self.events)
                     }
                 } catch let error as NSError {
                     print("Failed to load: \(error.localizedDescription)")
                 }
-                
-
-        
-            } catch DecodingError.keyNotFound(let key, let context) {
-                Swift.print("could not find key \(key) in JSON: \(context.debugDescription)")
-            } catch DecodingError.valueNotFound(let type, let context) {
-                Swift.print("could not find type \(type) in JSON: \(context.debugDescription)")
-            } catch DecodingError.typeMismatch(let type, let context) {
-                Swift.print("type mismatch for type \(type) in JSON: \(context.debugDescription)")
-            } catch DecodingError.dataCorrupted(let context) {
-                Swift.print("data found to be corrupted in JSON: \(context.debugDescription)")
-            } catch let error as NSError {
-                NSLog("Error in read(from:ofType:) domain= \(error.domain), description= \(error.localizedDescription)")
             }
         })
         task.resume()
