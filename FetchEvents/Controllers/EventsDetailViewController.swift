@@ -84,7 +84,4 @@ class EventsDetailViewController: UIViewController, ButtonTappedProtocol {
             eventDetailView.favoriteImage.isSelected = favoritesManager.isFavorite(event: event)
         }
     }
-    
-    
-    
 }
