@@ -40,8 +40,6 @@ class EventsApiManager {
         
         let url = URL(string:"https://api.seatgeek.com/2/events?\(queryString)")!
         
-        reset()
-        
         let task = session.dataTask(with: url, completionHandler: { [weak self]  (data, response, error) in
             
             do {

@@ -9,9 +9,9 @@ import UIKit
 import Kingfisher
 import CRRefresh
 
-class EventsViewController: UIViewController {
+class EventsViewController: UIViewController, RefreshProtocol {
     
-    let apiManager = EventsApiManager.shared
+    let eventService = EventsApiManager.shared
     
     let favoritesManager = FavoritesManager()
     
@@ -36,29 +36,31 @@ class EventsViewController: UIViewController {
         return tableView
         
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-            
+        
+        title = "Fetch Events"
         view.backgroundColor = .white
         
+        configureSearchBar()
+        
+        configureTableView()
+    }
+    
+    fileprivate func configureSearchBar() {
+        searchBar.returnKeyType = .done
+        searchBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+        searchBar.delegate = self
+        searchBar.autocapitalizationType = .none
+        view.addSubview(searchBar)
+    }
+    
+    fileprivate func configureTableView() {
         tableView.register(EventTableViewCell.self, forCellReuseIdentifier: cellReuseID)
         tableView.delegate = self
         tableView.dataSource = self
-        
-        searchBar.delegate = self
-
-        view.addSubview(searchBar)
-        view.addSubview(tableView)
-        
-        title = "Fetch Events"
-        
-        searchBar.returnKeyType = .done
-        
-        searchBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
-        
         tableView.anchor(top: searchBar.bottomAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
-        
         tableView.cr.addHeadRefresh(animator: NormalHeaderAnimator()) { [weak self] in
             self?.resetSearch(loadData: true)
             DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
@@ -66,30 +68,54 @@ class EventsViewController: UIViewController {
                 self?.tableView.cr.resetNoMore()
             })
         }
-        
         tableView.cr.addFootRefresh(animator: NormalFooterAnimator()) { [weak self] in
             self?.loadData()
             DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-
+                
                 guard let self = self else { return }
                 
                 self.tableView.cr.endLoadingMore()
                 
-                let totalCount = self.apiManager.getTotalRecords()
+                let totalCount = self.eventService.getTotalRecords()
                 if self.viewModels.count == totalCount {
                     self.tableView.cr.noticeNoMoreData()
                 }
             })
         }
-        
-
+        view.addSubview(tableView)
     }
-
+    
+    @objc func loadData() {
+        
+        guard let searchTerm = searchBar.text else {
+            return
+        }
+        
+        eventService.queryEvents(query: searchTerm, completion: { events in
+            DispatchQueue.main.async {
+                self.viewModels = events.map({ event in
+                    return EventViewModel(event: event)
+                })
+                self.tableView.reloadData()
+            }
+        })
+    }
+    
+    func resetSearch(loadData: Bool) {
+        eventService.reset()
+        if loadData {
+            self.loadData()
+        }
+    }
+    
+    func refresh() {
+        tableView.reloadData()
+    }
 }
 
 extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return apiManager.getArrayCount()
+        return eventService.getArrayCount()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -129,31 +155,6 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension EventsViewController {
-    @objc func loadData() {
-        
-        guard let searchTerm = searchBar.text else {
-            return
-        }
-        
-        apiManager.queryEvents(query: searchTerm, completion: { events in
-            DispatchQueue.main.async {
-                self.viewModels = events.map({ event in
-                    return EventViewModel(event: event)
-                })
-                self.tableView.reloadData()
-            }
-        })
-    }
-    
-    func resetSearch(loadData: Bool) {
-        apiManager.reset()
-        if loadData {
-            self.loadData()
-        }
-    }
-}
-
 extension EventsViewController : UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -172,12 +173,6 @@ extension EventsViewController : UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-    }
-}
-
-extension EventsViewController : RefreshProtocol {
-    func refresh() {
-        tableView.reloadData()
     }
 }
     
