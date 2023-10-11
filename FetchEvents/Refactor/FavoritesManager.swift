@@ -49,7 +49,7 @@ class FavoritesManager {
         favorites = []
         
         let defaults = UserDefaults.standard
-        defaults.set(nil, forKey: "Favorites")
+        defaults.set(nil, forKey: keyName)
     }
     
     func isFavorite(event : CompactEvent) -> Bool {

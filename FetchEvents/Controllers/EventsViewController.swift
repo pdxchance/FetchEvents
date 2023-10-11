@@ -49,14 +49,15 @@ class EventsViewController: UIViewController, RefreshProtocol {
     }
     
     fileprivate func configureSearchBar() {
+        view.addSubview(searchBar)
         searchBar.returnKeyType = .done
         searchBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
         searchBar.delegate = self
         searchBar.autocapitalizationType = .none
-        view.addSubview(searchBar)
     }
     
     fileprivate func configureTableView() {
+        view.addSubview(tableView)
         tableView.register(EventTableViewCell.self, forCellReuseIdentifier: cellReuseID)
         tableView.delegate = self
         tableView.dataSource = self
@@ -82,7 +83,6 @@ class EventsViewController: UIViewController, RefreshProtocol {
                 }
             })
         }
-        view.addSubview(tableView)
     }
     
     @objc func loadData() {
@@ -147,10 +147,7 @@ extension EventsViewController: UITableViewDelegate, UITableViewDataSource {
         
         let vm = viewModels[indexPath.row]
 
-        let controller = EventsDetailViewController()
-        controller.event = vm.event
-        controller.delegate = self
-        controller.favoritesManager = favoritesManager
+        let controller = EventsDetailViewController(event: vm.event, delegate: self, favoritesManager: favoritesManager)
         show(controller, sender: self)
     }
 }
