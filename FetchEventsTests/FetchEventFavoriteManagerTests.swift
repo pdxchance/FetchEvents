@@ -8,7 +8,7 @@
 import XCTest
 @testable import FetchEvents
 
-class FavoriteManagerTests: XCTestCase {
+class FetchEventFavoriteManagerTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -23,13 +23,13 @@ class FavoriteManagerTests: XCTestCase {
         let manager = FavoritesManager()
         manager.clearFavorites()
         
-        let event1 = Event(type: "", id: 1, datetimeUTC: "", venue: nil, datetimeTbd: false, performers: nil, isOpen: false, links: nil, datetime_local: "", timeTbd: false, shortTitle: "", visibleUntilUTC: "", stats: nil, taxonomies: nil, url: "", score: 0, announceDate: "", createdAt: "", dateTbd: true, title: "Some Event", popularity: 0, eventDescription: "", status: nil, accessMethod: nil, eventPromotion: false, announcements: nil, conditional: false, datetime_utc: "", themes: nil, domainInformation: nil)
+        let event1 = CompactEvent(id: 1, title: "Some Event", city: "Chicago", state: "Illinois", datetime_local: "", image: "")
+        
+        let event2 = CompactEvent(id: 666, title: "Some Event", city: "Chicago", state: "Illinois", datetime_local: "", image: "")
+        
+        let event3 = CompactEvent(id: 76, title: "Some Event", city: "Chicago", state: "Illinois", datetime_local: "", image: "")
         
         
-        let event2 = Event(type: "", id: 666, datetimeUTC: "", venue: nil, datetimeTbd: false, performers: nil, isOpen: false, links: nil, datetime_local: "", timeTbd: false, shortTitle: "", visibleUntilUTC: "", stats: nil, taxonomies: nil, url: "", score: 0, announceDate: "", createdAt: "", dateTbd: true, title: "Some Event", popularity: 0, eventDescription: "", status: nil, accessMethod: nil, eventPromotion: false, announcements: nil, conditional: false, datetime_utc: "", themes: nil, domainInformation: nil)
-        
-        
-        let event3 = Event(type: "", id: 8, datetimeUTC: "", venue: nil, datetimeTbd: false, performers: nil, isOpen: false, links: nil, datetime_local: "", timeTbd: false, shortTitle: "", visibleUntilUTC: "", stats: nil, taxonomies: nil, url: "", score: 0, announceDate: "", createdAt: "", dateTbd: true, title: "Some Event", popularity: 0, eventDescription: "", status: nil, accessMethod: nil, eventPromotion: false, announcements: nil, conditional: false, datetime_utc: "", themes: nil, domainInformation: nil)
 
         let favorite1 = Favorite(id: 1)
         let favorite2 = Favorite(id: 666)

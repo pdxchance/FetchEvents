@@ -8,7 +8,7 @@
 import XCTest
 @testable import FetchEvents
 
-class FetchEventsTests: XCTestCase {
+class FetchEventViewModelTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -19,7 +19,7 @@ class FetchEventsTests: XCTestCase {
     }
 
     func testViewModel() throws {
-        let node = Event(type: "", id: 1, datetimeUTC: "", venue: nil, datetimeTbd: false, performers: nil, isOpen: false, links: nil, datetime_local: "", timeTbd: false, shortTitle: "", visibleUntilUTC: "", stats: nil, taxonomies: nil, url: "", score: 0, announceDate: "", createdAt: "", dateTbd: true, title: "Some Event", popularity: 0, eventDescription: "", status: nil, accessMethod: nil, eventPromotion: false, announcements: nil, conditional: false, datetime_utc: "", themes: nil, domainInformation: nil)
+        let node = CompactEvent(id: 1, title: "Some Event", city: "Chicago", state: "Illinois", datetime_local: "", image: "")
         
         let viewModel = EventViewModel(event: node)
         
