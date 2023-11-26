@@ -47,36 +47,17 @@ class EventsApiManager {
                                 
                 do {
                     // make sure this JSON is in the format we expect
-                    if let eventModel = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                    let json = try? JSONDecoder().decode(CompactEventModel.self, from: data)
+                    
+                    let events = json?.events ?? []
+                    self.events = events
+                    
+                    let totalRecs = json?.meta?.total ?? 0
+                    self.totalRecs = totalRecs
                         
-                        
-                        let events = eventModel["events"] as! [[String:Any]]
-                        
-                        for event in events {
-                            let id = event["id"] as! Int
-                            let title = event["title"] as! String
-                            
-                            let venue = event["venue"] as! [String: Any]
-                            let city = venue["state"] as! String
-                            let state = venue["city"] as! String
-                            
-                            let datetime = event["datetime_local"] as! String
-                            
-                            let performers = event["performers"] as! [[String: Any]]
-                            let performer = performers[0]
-                            let image = performer["image"] as! String
-                        
-                            let compactEvent = CompactEvent(id: id, title: title, city: city, state: state, datetime_local: datetime, image: image)
-                            self.events.append(compactEvent)
-                        }
-                        
-                        let meta = eventModel["meta"] as! [String:Any]
-                        let totalRecs = meta["total"] as! Int
-                        self.totalRecs = totalRecs
-                        
-                        self.pageNum += 1
-                        completion(self.events)
-                    }
+                    self.pageNum += 1
+
+                    completion(events)
                 } catch let error as NSError {
                     print("Failed to load: \(error.localizedDescription)")
                 }
@@ -113,7 +94,7 @@ class MockApiManager : EventsApiManager {
     
     override func queryEvents(query: String, completion: @escaping eventCompletionHandler) {
 
-        let event = CompactEvent(id: 1, title: "", city: "", state: "", datetime_local: "", image: "")
+        let event = CompactEvent(id: 1, title: "", city: "", state: "", datetime_local: "", image: "", performers: nil)
         let events = [event]
         
         completion(events)

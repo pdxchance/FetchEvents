@@ -41,6 +41,6 @@ public class EventViewModel {
     }
     
     public var image: String {
-        return event.image ?? ""
+        return event.performers?[0].image ?? ""
     }
 }
