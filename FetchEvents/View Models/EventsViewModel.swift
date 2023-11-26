@@ -9,6 +9,8 @@ import Foundation
 
 public class EventViewModel {
     
+    weak var appCordinator: HomeCoordinator?
+    
     let event : CompactEvent
     
     init(event : CompactEvent) {
