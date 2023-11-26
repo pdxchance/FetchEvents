@@ -12,14 +12,19 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
+    var appCoordinator: Coordinator?
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        let firstScreen = EventsViewController()
-        let navController = UINavigationController(rootViewController: firstScreen)
-        
         self.window = UIWindow(frame: UIScreen.main.bounds)
+        
+        let navController = UINavigationController()
+        appCoordinator?.navigationController = navController
+        appCoordinator = AppCoordinator(navigationController: navController)
+        appCoordinator?.start()
+        
         self.window?.rootViewController = navController
         self.window?.makeKeyAndVisible()
         

@@ -17,6 +17,9 @@
 		CEAC0DC02660650B00D29AAA /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAC0DBF2660650B00D29AAA /* Utils.swift */; };
 		CEAC0DC22660759300D29AAA /* EventsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAC0DC12660759300D29AAA /* EventsDetailViewController.swift */; };
 		CEAC0DC926607C7E00D29AAA /* EventsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEAC0DC826607C7E00D29AAA /* EventsViewModel.swift */; };
+		CEF074D42B11F74000B67CCF /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF074D32B11F74000B67CCF /* Coordinator.swift */; };
+		CEF074D62B11F7AC00B67CCF /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF074D52B11F7AC00B67CCF /* HomeCoordinator.swift */; };
+		CEF074D82B11F97A00B67CCF /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF074D72B11F97A00B67CCF /* AppCoordinator.swift */; };
 		CEF2962A265FBBF4004525B8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF29629265FBBF4004525B8 /* AppDelegate.swift */; };
 		CEF29634265FBBF4004525B8 /* FetchEvents.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CEF29632265FBBF4004525B8 /* FetchEvents.xcdatamodeld */; };
 		CEF29636265FBBF5004525B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEF29635265FBBF5004525B8 /* Assets.xcassets */; };
@@ -52,6 +55,9 @@
 		CEAC0DBF2660650B00D29AAA /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		CEAC0DC12660759300D29AAA /* EventsDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsDetailViewController.swift; sourceTree = "<group>"; };
 		CEAC0DC826607C7E00D29AAA /* EventsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsViewModel.swift; sourceTree = "<group>"; };
+		CEF074D32B11F74000B67CCF /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		CEF074D52B11F7AC00B67CCF /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
+		CEF074D72B11F97A00B67CCF /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		CEF29626265FBBF4004525B8 /* FetchEvents.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FetchEvents.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF29629265FBBF4004525B8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CEF29633265FBBF4004525B8 /* FetchEvents.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FetchEvents.xcdatamodel; sourceTree = "<group>"; };
@@ -154,6 +160,16 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		CEF074D22B11F72600B67CCF /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				CEF074D32B11F74000B67CCF /* Coordinator.swift */,
+				CEF074D52B11F7AC00B67CCF /* HomeCoordinator.swift */,
+				CEF074D72B11F97A00B67CCF /* AppCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
 		CEF2961D265FBBF4004525B8 = {
 			isa = PBXGroup;
 			children = (
@@ -177,6 +193,7 @@
 		CEF29628265FBBF4004525B8 /* FetchEvents */ = {
 			isa = PBXGroup;
 			children = (
+				CEF074D22B11F72600B67CCF /* Coordinator */,
 				4CD44BA727C269BB007B204E /* Refactor */,
 				CE03F4592660F28B004BE4C4 /* Protocols */,
 				CEAC0DC72660777800D29AAA /* Cells */,
@@ -363,10 +380,13 @@
 			files = (
 				4CD44BA027C0C99A007B204E /* EventsApiManager.swift in Sources */,
 				CEAC0DC22660759300D29AAA /* EventsDetailViewController.swift in Sources */,
+				CEF074D62B11F7AC00B67CCF /* HomeCoordinator.swift in Sources */,
 				CEF2962A265FBBF4004525B8 /* AppDelegate.swift in Sources */,
+				CEF074D82B11F97A00B67CCF /* AppCoordinator.swift in Sources */,
 				CEF2967C265FE9D2004525B8 /* EventsModel.swift in Sources */,
 				CEF29643265FC210004525B8 /* Constraints.swift in Sources */,
 				CEF29634265FBBF4004525B8 /* FetchEvents.xcdatamodeld in Sources */,
+				CEF074D42B11F74000B67CCF /* Coordinator.swift in Sources */,
 				CEAC0DC926607C7E00D29AAA /* EventsViewModel.swift in Sources */,
 				CEF29647265FC720004525B8 /* EventTableViewCell.swift in Sources */,
 				4CD44BA227C1A5D0007B204E /* EventDetailView.swift in Sources */,
