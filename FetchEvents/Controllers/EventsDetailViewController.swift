@@ -47,7 +47,7 @@ class EventsDetailViewController: UIViewController, ButtonTappedProtocol {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if let image = event.image {
+        if let image = event.performers?[0].image {
             let url = URL(string: image)
             eventDetailView.eventImage.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), completionHandler: nil)
         }
